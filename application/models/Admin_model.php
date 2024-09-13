@@ -574,14 +574,20 @@ class Admin_model extends CI_Model {
     }
 
 	function get_menus($roleId) {
+
 		try{
-			$query = $this->db->select('menus.*')
-                 ->from('menus')
-                 ->join('permissions', 'menus.id = permissions.menu_id', 'left')
-                 ->where('permissions.role_id', $roleId)
-                 ->where('permissions.can_view', true)
-                 ->where('menus.is_active', true)
-                 ->order_by('menus.order', 'ASC');
+			$this->db->select('menus.*');
+            $this->db->from('menus');
+            $this->db->where('menus.is_active', true);
+            $query = $this->db->get();
+            return $query->result_array();
+			// $query = $this->db->select('menus.*')
+            //      ->from('menus')
+            //      ->join('permissions', 'menus.id = permissions.menu_id', 'left')
+            //      ->where('permissions.role_id', $roleId)
+            //      ->where('permissions.can_view', true)
+            //      ->where('menus.is_active', true)
+            //      ->order_by('menus.order', 'ASC');
 		}catch(\Exception $e){
 			var_dump($e);
 			exit;
@@ -590,6 +596,30 @@ class Admin_model extends CI_Model {
         //$query = $this->db->get('menus');
         return $query->get()->result();
     }
+
+	function get_permissions($id){
+		$query = $this->db->select('permissions.*')
+			->from('permissions')
+			->where('permissions.role_id', $id);
+        return $query->get()->result();
+	}
+	
+	public function delete_permissions_by_role_id($role_id)
+	{
+		$this->db->where('role_id', $role_id);
+		$this->db->delete('permissions');
+	}
+	
+	public function add_permission($role_id, $menu_id)
+	{
+		$data = array(
+			'role_id' => $role_id,
+			'menu_id' => $menu_id
+			
+		);
+		$this->db->insert('permissions', $data);
+	}
+	
 
 	function get_sub_menus($roleId) {
 		$query = $this->db->select('submenus.*, submenus.menu_id')

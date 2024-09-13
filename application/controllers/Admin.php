@@ -613,19 +613,55 @@ class Admin extends CI_Controller
             echo $this->Notification_model->sendNotification($this->input->post('heading'), $this->input->post('message'),
                 $this->input->post('large_icon'), $this->input->post('big_picture'), $this->input->post('data'),
                 $this->input->post('user_ids'));
-        } else if ($this->input->post('get_menu_list')) {
-            echo json_encode($this->Admin_model->get_menus());
-        } else {
+            } else if ($this->input->post('get_menu_list')) {
+                echo json_encode($this->Admin_model->get_menus());
+            } else {
             $data['config'] = $this->Admin_model->getConfig();
             $this->load->view('manage_admins', $data);
         }
     }
 
-    function set_permissions(){
-        $menus = $this->Admin_model->get_menus(1);
-        var_dump($menus);
-        exit;
+    public function set_access_permissions($id)
+    {
+        // Fetch data based on the provided ID
+        $data['menus'] = $this->Admin_model->get_menus($id);
+        $data['permissions'] = $this->Admin_model->get_permissions($id);
+
+        $permission_menu_ids = [];
+        foreach ($data['permissions'] as $permission) {
+            array_push($permission_menu_ids, $permission->menu_id);
+        }
+        $data['permissions']  = $permission_menu_ids;
+        $data['role_id'] = $id;
+
+        // Load the view and pass the data
+        $this->load->view('set_access_permissions', $data);
     }
+    public function save_permissions()
+    {
+        // Load the model
+        $this->load->model('Admin_model');
+    
+        // Get role_id from the form submission
+        $role_id = $this->input->post('role_id');
+        
+        // Get selected permissions from the form submission
+        $selected_permissions = $this->input->post('permissions') ?: [];
+    
+        // Delete existing permissions for the given role
+        $this->Admin_model->delete_permissions_by_role_id($role_id);
+    
+        // Add new permissions based on selected checkboxes
+        foreach ($selected_permissions as $menu_id) {
+            $this->Admin_model->add_permission($role_id, $menu_id);
+        }
+    
+        // Redirect or show a success message
+        $this->session->set_flashdata('success', 'Permissions updated successfully.');
+        redirect('set_access_permissions/' . $role_id);
+    }
+    
+
 
     function telegram_setting()
     {

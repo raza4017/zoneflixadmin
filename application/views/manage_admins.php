@@ -71,6 +71,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         				<button data-bs-toggle="modal" data-bs-target="#Add_admin_Modal" id="Add_User"
                         					class="btn btn-sm btn-primary waves-effect waves-light"><span
                         						class="btn-label"><i class="fa fa-plus"></i></span>Add Sub Admin</button>
+                                           
+
 
                         			</div>
 
@@ -287,7 +289,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             {
                 "data": "2",
                 render: function (data) {
-                    return '<div class="btn-group mr-1" data-container="body"> <button type="button" class="btn btn-secondary btn-sm dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Options <i class="mdi mdi-chevron-down"></i></button> <div class="dropdown-menu" style="" data-container="body"><a class="dropdown-item" href="<?= site_url('set_permissions') ?>">Set Access Permissions</a> <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#send_Notification_Modal" onclick="initNotification(' +
+                    return '<div class="btn-group mr-1" data-container="body"> <button type="button" class="btn btn-secondary btn-sm dropdown-toggle" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Options <i class="mdi mdi-chevron-down"></i></button> <div class="dropdown-menu" style="" data-container="body"><a class="dropdown-item" href="<?= site_url('set_access_permissions') ?>/' + data + '">Set Access Permissions</a> <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#send_Notification_Modal" onclick="initNotification(' +
                         data + ')" href="#">Send Notification</a> <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#Edit_this_User_Modal" onclick="Load_User_Data(' +
                         data + ')" href="#">Edit Sub Admin</a> <a class="dropdown-item" onclick="Delete_User(' +
                         data + ')" href="#">Delete SubAdmin</a> </div> </div>';

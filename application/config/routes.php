@@ -83,6 +83,13 @@ $route['report_manager'] = 'admin/report_manager';
 $route['request_manager'] = 'admin/request_manager';
 $route['manage_user'] = 'admin/manage_user';
 $route['manage_sub_admins'] = 'admin/manage_sub_admins';
+// $route['set_access_permissions'] = 'admin/set_access_permissions';
+$route['set_access_permissions/(:num)'] = 'admin/set_access_permissions/$1';
+$route['save_permissions'] = 'admin/save_permissions';
+
+
+
+
 $route['telegram_setting'] = 'admin/telegram_setting';
 $route['telegram_announcement'] = 'admin/telegram_announcement';
 $route['payment_gateways'] = 'admin/payment_gateways';
