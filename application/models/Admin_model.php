@@ -603,6 +603,16 @@ class Admin_model extends CI_Model {
 			->where('permissions.role_id', $id);
         return $query->get()->result();
 	}
+
+	function get_admin_permissions($id){
+		$query = $this->db->select('menus.*')
+                 ->from('menus')
+                 ->join('permissions', 'menus.id = permissions.menu_id', 'left')
+                 ->where('permissions.role_id', $id)
+                 ->where('menus.is_active', true);
+
+		return $query->get()->result();
+	}
 	
 	public function delete_permissions_by_role_id($role_id)
 	{

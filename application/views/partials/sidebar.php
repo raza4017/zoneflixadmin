@@ -1,3 +1,7 @@
+<?php 
+    $sub_admin_permissions = $this->session->userdata('permissions'); 
+    $user_role = $this->session->userdata('role');
+?> 
 <!-- ========== Left Sidebar Start ========== -->
 <div class="vertical-menu">
 
@@ -7,467 +11,975 @@
         <div id="sidebar-menu">
             <!-- Left Menu Start -->
             <ul class="metismenu list-unstyled" id="side-menu">
-                <li class="menu-title"><?php echo lang('Main'); ?></li>
-
-                <li>
-                    <a href="<?= site_url('index') ?>" class="waves-effect">
-                        <i class="ti-home"></i>
-                        <span><?php echo lang('dashboard_sidebar'); ?></span>
-                    </a>
-                </li>
+                <?php if($user_role == 2 and in_array('dashboard_sidebar', $sub_admin_permissions)){ ?>
+                    <li class="menu-title"><?php echo lang('Main'); ?></li>
+                    <li>
+                        <a href="<?= site_url('index') ?>" class="waves-effect">
+                            <i class="ti-home"></i>
+                            <span><?php echo lang('dashboard_sidebar'); ?></span>
+                        </a>
+                    </li>
+                <?php } elseif($user_role == 1) { ?> 
+                    <li class="menu-title"><?php echo lang('Main'); ?></li>
+                    <li>
+                        <a href="<?= site_url('index') ?>" class="waves-effect">
+                            <i class="ti-home"></i>
+                            <span><?php echo lang('dashboard_sidebar'); ?></span>
+                        </a>
+                    </li>
+                <?php } ?>
 
                 <li class="menu-title"><?php echo lang('Contents'); ?></li>
+                <?php if($user_role == 2 and in_array('movies', $sub_admin_permissions)){ ?>
+                    <li>
 
-                <li>
+                        <a href="javascript: void(0);" class="has-arrow waves-effect">
 
-                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                            <i class="mdi mdi-movie-open"></i>
 
-                        <i class="mdi mdi-movie-open"></i>
+                            <span><?php echo lang('movies'); ?></span>
 
-                        <span><?php echo lang('movies'); ?></span>
+                        </a>
 
-                    </a>
+                        <ul class="sub-menu" aria-expanded="false">
 
-                    <ul class="sub-menu" aria-expanded="false">
+                            <li><a class="typcn typcn-plus" href="<?= site_url('add_movie') ?>">
+                                    <?php echo lang('add_movies'); ?></a></li>
 
-                        <li><a class="typcn typcn-plus" href="<?= site_url('add_movie') ?>">
-                                <?php echo lang('add_movies'); ?></a></li>
+                            <li><a class="typcn typcn-th-list" href="<?= site_url('all_movies') ?>">
+                                    <?php echo lang('all_movies'); ?></a></li>
 
-                        <li><a class="typcn typcn-th-list" href="<?= site_url('all_movies') ?>">
-                                <?php echo lang('all_movies'); ?></a></li>
+                        </ul>
 
-                    </ul>
+                    </li>
+                <?php } elseif($user_role == 1) { ?> 
+                    <li>
 
-                </li>
+                        <a href="javascript: void(0);" class="has-arrow waves-effect">
 
+                            <i class="mdi mdi-movie-open"></i>
 
-                <li>
+                            <span><?php echo lang('movies'); ?></span>
 
-                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                        </a>
 
-                        <i class="mdi mdi-movie-roll"></i>
+                        <ul class="sub-menu" aria-expanded="false">
 
-                        <span><?php echo lang('web_series'); ?></span>
+                            <li><a class="typcn typcn-plus" href="<?= site_url('add_movie') ?>">
+                                    <?php echo lang('add_movies'); ?></a></li>
 
-                    </a>
+                            <li><a class="typcn typcn-th-list" href="<?= site_url('all_movies') ?>">
+                                    <?php echo lang('all_movies'); ?></a></li>
 
-                    <ul class="sub-menu" aria-expanded="false">
+                        </ul>
 
-                        <li><a class="typcn typcn-plus" href="<?= site_url('add_web_series') ?>">
-                                <?php echo lang('add_web_series'); ?></a></li>
+                    </li>
+                <?php } ?>
 
-                        <li><a class="typcn typcn-th-list" href="<?= site_url('all_web_series') ?>">
-                                <?php echo lang('all_web_series'); ?></a></li>
+                <?php if($user_role == 2 and in_array('web_series', $sub_admin_permissions)){ ?>
+                    <li>
 
-                    </ul>
+                        <a href="javascript: void(0);" class="has-arrow waves-effect">
 
-                </li>
+                            <i class="mdi mdi-movie-roll"></i>
 
-                <li>
+                            <span><?php echo lang('web_series'); ?></span>
 
-                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                        </a>
 
-                        <i class="mdi mdi-youtube-tv"></i>
+                        <ul class="sub-menu" aria-expanded="false">
 
-                        <span><?php echo lang('live_tv'); ?></span>
+                            <li><a class="typcn typcn-plus" href="<?= site_url('add_web_series') ?>">
+                                    <?php echo lang('add_web_series'); ?></a></li>
 
-                    </a>
+                            <li><a class="typcn typcn-th-list" href="<?= site_url('all_web_series') ?>">
+                                    <?php echo lang('all_web_series'); ?></a></li>
 
-                    <ul class="sub-menu" aria-expanded="false">
+                        </ul>
 
-                        <li><a class="typcn typcn-plus" href="<?= site_url('add_channel') ?>">
-                                <?php echo lang('add_channels'); ?></a></li>
+                    </li>
+                <?php } elseif($user_role == 1) { ?> 
+                    <li>
 
-                        <li><a class="typcn typcn-th-list" href="<?= site_url('all_channels') ?>">
-                                <?php echo lang('all_channels'); ?></a></a></li>
+                        <a href="javascript: void(0);" class="has-arrow waves-effect">
 
-                    </ul>
+                            <i class="mdi mdi-movie-roll"></i>
 
-                </li>
+                            <span><?php echo lang('web_series'); ?></span>
+
+                        </a>
+
+                        <ul class="sub-menu" aria-expanded="false">
+
+                            <li><a class="typcn typcn-plus" href="<?= site_url('add_web_series') ?>">
+                                    <?php echo lang('add_web_series'); ?></a></li>
+
+                            <li><a class="typcn typcn-th-list" href="<?= site_url('all_web_series') ?>">
+                                    <?php echo lang('all_web_series'); ?></a></li>
+
+                        </ul>
+
+                    </li>
+                <?php } ?>
+
+                <?php if($user_role == 2 and in_array('live_tv', $sub_admin_permissions)){ ?>
+                    <li>
+
+                        <a href="javascript: void(0);" class="has-arrow waves-effect">
+
+                            <i class="mdi mdi-youtube-tv"></i>
+
+                            <span><?php echo lang('live_tv'); ?></span>
+
+                        </a>
+
+                        <ul class="sub-menu" aria-expanded="false">
+
+                            <li><a class="typcn typcn-plus" href="<?= site_url('add_channel') ?>">
+                                    <?php echo lang('add_channels'); ?></a></li>
+
+                            <li><a class="typcn typcn-th-list" href="<?= site_url('all_channels') ?>">
+                                    <?php echo lang('all_channels'); ?></a></a></li>
+
+                        </ul>
+
+                    </li>
+                <?php } elseif($user_role == 1) { ?>
+                    <li>
+
+                        <a href="javascript: void(0);" class="has-arrow waves-effect">
+
+                            <i class="mdi mdi-youtube-tv"></i>
+
+                            <span><?php echo lang('live_tv'); ?></span>
+
+                        </a>
+
+                        <ul class="sub-menu" aria-expanded="false">
+
+                            <li><a class="typcn typcn-plus" href="<?= site_url('add_channel') ?>">
+                                    <?php echo lang('add_channels'); ?></a></li>
+
+                            <li><a class="typcn typcn-th-list" href="<?= site_url('all_channels') ?>">
+                                    <?php echo lang('all_channels'); ?></a></a></li>
+
+                        </ul>
+
+                    </li>
+                <?php } ?>
 
                 <li class="menu-title"><?php echo lang('special'); ?></li>
-                <li>
+                <?php if($user_role == 2 and in_array('genres', $sub_admin_permissions)){ ?>
+                    <li>
 
-                    <a href="<?= site_url('genres') ?>" class="waves-effect">
+                        <a href="<?= site_url('genres') ?>" class="waves-effect">
 
-                        <i class="fab fa-trello"></i>
+                            <i class="fab fa-trello"></i>
 
-                        <span><?php echo lang('genres'); ?></span>
+                            <span><?php echo lang('genres'); ?></span>
 
-                    </a>
+                        </a>
 
-                </li>
+                    </li>
+                <?php } elseif($user_role == 1) { ?>
+                    <li>
 
-                <li>
+                        <a href="<?= site_url('genres') ?>" class="waves-effect">
 
-                    <a href="<?= site_url('live_tv_genres') ?>" class="waves-effect">
+                            <i class="fab fa-trello"></i>
 
-                        <i class="fas fa-life-ring"></i>
+                            <span><?php echo lang('genres'); ?></span>
 
-                        <span>Live Tv Genres</span>
+                        </a>
 
-                    </a>
-                </li>
+                    </li>
+                <?php } ?>
+                
+                <?php if($user_role == 2 and in_array('live_tv_genres', $sub_admin_permissions)){ ?>
+                    <li>
 
-                <li>
+                        <a href="<?= site_url('live_tv_genres') ?>" class="waves-effect">
 
-                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                            <i class="fas fa-life-ring"></i>
 
-                        <i class="fas fa-layer-group"></i>
+                            <span>Live Tv Genres</span>
 
-                        <span>Upcoming Contents</span>
+                        </a>
+                    </li>
+                <?php } elseif($user_role == 1) { ?>
+                    <li>
 
-                    </a>
+                        <a href="<?= site_url('live_tv_genres') ?>" class="waves-effect">
 
-                    <ul class="sub-menu" aria-expanded="false">
+                            <i class="fas fa-life-ring"></i>
 
-                        <li><a class="typcn typcn-plus" href="<?= site_url('add_upcoming_contents') ?>">
-                                Add Content</a></li>
+                            <span>Live Tv Genres</span>
 
-                        <li><a class="typcn typcn-th-list" href="<?= site_url('all_upcoming_contents') ?>">
-                                All Content</a></li>
+                        </a>
+                    </li>
+                <?php } ?>
 
-                    </ul>
+                <?php if($user_role == 2 and in_array('Upcoming Contents', $sub_admin_permissions)){ ?>
+                    <li>
 
-                </li>
+                        <a href="javascript: void(0);" class="has-arrow waves-effect">
 
-                <li>
+                            <i class="fas fa-layer-group"></i>
 
-                    <a href="<?= site_url('content_networks') ?>" class="waves-effect">
+                            <span>Upcoming Contents</span>
 
-                        <i class="fa fa-retweet"></i>
+                        </a>
 
-                        <span>Content Networks</span>
+                        <ul class="sub-menu" aria-expanded="false">
 
-                    </a>
-                </li>
+                            <li><a class="typcn typcn-plus" href="<?= site_url('add_upcoming_contents') ?>">
+                                    Add Content</a></li>
 
-                <li>
+                            <li><a class="typcn typcn-th-list" href="<?= site_url('all_upcoming_contents') ?>">
+                                    All Content</a></li>
 
-                    <a href="<?= site_url('custom_tags') ?>" class="waves-effect">
+                        </ul>
 
-                        <i class="fa fa-tag"></i>
+                    </li>
+                <?php } elseif($user_role == 1) { ?>
+                    <li>
 
-                        <span>Custom Tags</span>
+                        <a href="javascript: void(0);" class="has-arrow waves-effect">
 
-                    </a>
-                </li>
+                            <i class="fas fa-layer-group"></i>
+
+                            <span>Upcoming Contents</span>
+
+                        </a>
+
+                        <ul class="sub-menu" aria-expanded="false">
+
+                            <li><a class="typcn typcn-plus" href="<?= site_url('add_upcoming_contents') ?>">
+                                    Add Content</a></li>
+
+                            <li><a class="typcn typcn-th-list" href="<?= site_url('all_upcoming_contents') ?>">
+                                    All Content</a></li>
+
+                        </ul>
+
+                    </li>
+                <?php } ?>
+                
+                <?php if($user_role == 2 and in_array('content_networks', $sub_admin_permissions)){ ?>
+                    <li>
+
+                        <a href="<?= site_url('content_networks') ?>" class="waves-effect">
+
+                            <i class="fa fa-retweet"></i>
+
+                            <span>Content Networks</span>
+
+                        </a>
+                    </li>
+                <?php } elseif($user_role == 1) { ?>
+                    <li>
+
+                        <a href="<?= site_url('content_networks') ?>" class="waves-effect">
+
+                            <i class="fa fa-retweet"></i>
+
+                            <span>Content Networks</span>
+
+                        </a>
+                    </li>
+                <?php } ?>
+
+                <?php if($user_role == 2 and in_array('custom_tags', $sub_admin_permissions)){ ?>
+                    <li>
+
+                        <a href="<?= site_url('custom_tags') ?>" class="waves-effect">
+
+                            <i class="fa fa-tag"></i>
+
+                            <span>Custom Tags</span>
+
+                        </a>
+                    </li>
+                <?php } elseif($user_role == 1) { ?>
+                    <li>
+
+                        <a href="<?= site_url('custom_tags') ?>" class="waves-effect">
+
+                            <i class="fa fa-tag"></i>
+
+                            <span>Custom Tags</span>
+
+                        </a>
+                    </li>
+                <?php } ?>
 
                 <li class="menu-title"><?php echo lang('import'); ?></li>
-                <li>
+                <?php if($user_role == 2 and in_array('search', $sub_admin_permissions)){ ?>
+                    <li>
 
-                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                        <a href="javascript: void(0);" class="has-arrow waves-effect">
 
-                        <i class="fa fa-search"></i>
+                            <i class="fa fa-search"></i>
 
-                        <span><?php echo lang('search'); ?></span>
+                            <span><?php echo lang('search'); ?></span>
 
-                    </a>
+                        </a>
 
-                    <ul class="sub-menu" aria-expanded="false">
+                        <ul class="sub-menu" aria-expanded="false">
 
-                        <li><a class="mdi mdi-movie-open" href="<?= site_url('search_movie') ?>">
-                                <?php echo lang('movies'); ?></a></li>
+                            <li><a class="mdi mdi-movie-open" href="<?= site_url('search_movie') ?>">
+                                    <?php echo lang('movies'); ?></a></li>
 
-                        <li><a class="mdi mdi-movie-roll" href="<?= site_url('search_webseries') ?>">
-                                <?php echo lang('web_series'); ?></a></li>
+                            <li><a class="mdi mdi-movie-roll" href="<?= site_url('search_webseries') ?>">
+                                    <?php echo lang('web_series'); ?></a></li>
 
-                    </ul>
+                        </ul>
 
-                </li>
-                <li>
+                    </li>
+                <?php } elseif($user_role == 1) { ?>
+                     <li>
 
-                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                        <a href="javascript: void(0);" class="has-arrow waves-effect">
 
-                        <i class="fas fa-magic"></i>
+                            <i class="fa fa-search"></i>
 
-                        <span><?php echo lang('bulk'); ?></span>
+                            <span><?php echo lang('search'); ?></span>
 
-                    </a>
+                        </a>
 
-                    <ul class="sub-menu" aria-expanded="false">
+                        <ul class="sub-menu" aria-expanded="false">
 
-                        <li><a class="mdi mdi-movie-open" href="<?= site_url('add_bulk_movie') ?>">
-                                <?php echo lang('movies'); ?></a></li>
+                            <li><a class="mdi mdi-movie-open" href="<?= site_url('search_movie') ?>">
+                                    <?php echo lang('movies'); ?></a></li>
 
-                        <li><a class="mdi mdi-movie-roll" href="<?= site_url('add_bulk_webseries') ?>">
-                                <?php echo lang('web_series'); ?></a></li>
+                            <li><a class="mdi mdi-movie-roll" href="<?= site_url('search_webseries') ?>">
+                                    <?php echo lang('web_series'); ?></a></li>
 
-                    </ul>
+                        </ul>
 
-                </li>
-                <li>
+                    </li>
+                <?php } ?>
+                
+                <?php if($user_role == 2 and in_array('bulk', $sub_admin_permissions)){ ?>
+                    <li>
 
-                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                        <a href="javascript: void(0);" class="has-arrow waves-effect">
 
-                        <i class="fas fa-fire"></i>
+                            <i class="fas fa-magic"></i>
 
-                        <span>Scrap</span>
+                            <span><?php echo lang('bulk'); ?></span>
 
-                    </a>
+                        </a>
 
-                    <ul class="sub-menu" aria-expanded="false">
+                        <ul class="sub-menu" aria-expanded="false">
 
-                        <li><a class="typcn typcn-link" href="<?= site_url('scrap_gogoanime') ?>">
-                                GogoAnime</a></li>
+                            <li><a class="mdi mdi-movie-open" href="<?= site_url('add_bulk_movie') ?>">
+                                    <?php echo lang('movies'); ?></a></li>
 
-                        <li><a class="typcn typcn-link" href="<?= site_url('scrap_topcinema') ?>">
-                        Topcinema</a></li>
+                            <li><a class="mdi mdi-movie-roll" href="<?= site_url('add_bulk_webseries') ?>">
+                                    <?php echo lang('web_series'); ?></a></li>
 
-                    </ul>
+                        </ul>
 
-                </li>
+                    </li>
+                <?php } elseif($user_role == 1) { ?>
+                    <li>
+
+                        <a href="javascript: void(0);" class="has-arrow waves-effect">
+
+                            <i class="fas fa-magic"></i>
+
+                            <span><?php echo lang('bulk'); ?></span>
+
+                        </a>
+
+                        <ul class="sub-menu" aria-expanded="false">
+
+                            <li><a class="mdi mdi-movie-open" href="<?= site_url('add_bulk_movie') ?>">
+                                    <?php echo lang('movies'); ?></a></li>
+
+                            <li><a class="mdi mdi-movie-roll" href="<?= site_url('add_bulk_webseries') ?>">
+                                    <?php echo lang('web_series'); ?></a></li>
+
+                        </ul>
+
+                    </li>
+                <?php } ?>
+
+                <?php if($user_role == 2 and in_array('Scrap', $sub_admin_permissions)){ ?>
+                    <li>
+
+                        <a href="javascript: void(0);" class="has-arrow waves-effect">
+
+                            <i class="fas fa-fire"></i>
+
+                            <span>Scrap</span>
+
+                        </a>
+
+                        <ul class="sub-menu" aria-expanded="false">
+
+                            <li><a class="typcn typcn-link" href="<?= site_url('scrap_gogoanime') ?>">
+                                    GogoAnime</a></li>
+
+                            <li><a class="typcn typcn-link" href="<?= site_url('scrap_topcinema') ?>">
+                            Topcinema</a></li>
+
+                        </ul>
+
+                    </li>
+                <?php } elseif($user_role == 1) { ?>
+                    <li>
+
+                        <a href="javascript: void(0);" class="has-arrow waves-effect">
+
+                            <i class="fas fa-fire"></i>
+
+                            <span>Scrap</span>
+
+                        </a>
+
+                        <ul class="sub-menu" aria-expanded="false">
+
+                            <li><a class="typcn typcn-link" href="<?= site_url('scrap_gogoanime') ?>">
+                                    GogoAnime</a></li>
+
+                            <li><a class="typcn typcn-link" href="<?= site_url('scrap_topcinema') ?>">
+                            Topcinema</a></li>
+
+                        </ul>
+
+                    </li>
+                <?php } ?>
 
                 <li class="menu-title"><?php echo lang('SUBSCRIPTION'); ?></li>
-                <li>
-                    <a href="<?= site_url('coupon_manager') ?>" class="waves-effect">
+                <?php if($user_role == 2 and in_array('coupon_manager', $sub_admin_permissions)){ ?>
+                    <li>
+                        <a href="<?= site_url('coupon_manager') ?>" class="waves-effect">
 
-                        <i class="typcn typcn-ticket"></i>
+                            <i class="typcn typcn-ticket"></i>
 
-                        <span><?php echo lang('coupon_manager'); ?></span>
+                            <span><?php echo lang('coupon_manager'); ?></span>
 
-                    </a>
+                        </a>
 
-                </li>
-                <li>
+                    </li>
+                <?php } elseif($user_role == 1) { ?>
+                    <li>
+                        <a href="<?= site_url('coupon_manager') ?>" class="waves-effect">
 
-                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                            <i class="typcn typcn-ticket"></i>
 
-                        <i class="mdi mdi-alert-octagram"></i>
+                            <span><?php echo lang('coupon_manager'); ?></span>
 
-                        <span>subscriptions</span>
+                        </a>
 
-                    </a>
+                    </li>
+                <?php } ?>
 
-                    <ul class="sub-menu" aria-expanded="false">
+                <?php if($user_role == 2 and in_array('subscriptions', $sub_admin_permissions)){ ?>
+                    <li>
 
-                        <li><a class="typcn typcn-th-large" href="<?= site_url('sub_plan') ?>">
-                                Subscription Plans</a></li>
+                        <a href="javascript: void(0);" class="has-arrow waves-effect">
 
-                        <li><a class="typcn typcn-th-list" href="<?= site_url('sub_request') ?>">
-                                Subscription Requests</a></li>
+                            <i class="mdi mdi-alert-octagram"></i>
 
-                    </ul>
+                            <span>subscriptions</span>
 
-                </li>
-                <li>
+                        </a>
 
-                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                        <ul class="sub-menu" aria-expanded="false">
 
-                        <i class="mdi mdi-credit-card-multiple"></i>
+                            <li><a class="typcn typcn-th-large" href="<?= site_url('sub_plan') ?>">
+                                    Subscription Plans</a></li>
 
-                        <span>Payment Gateway</span>
+                            <li><a class="typcn typcn-th-list" href="<?= site_url('sub_request') ?>">
+                                    Subscription Requests</a></li>
 
-                    </a>
+                        </ul>
 
-                    <ul class="sub-menu" aria-expanded="false">
+                    </li>
+                <?php } elseif($user_role == 1) { ?>
+                    <li>
 
-                        <li><a class="mdi mdi-credit-card-outline" href="<?= site_url('payment_gateways') ?>">
-                                Payment Gateways</a></li>
+                        <a href="javascript: void(0);" class="has-arrow waves-effect">
 
-                        <li><a class="mdi mdi-wallet-membership" href="<?= site_url('custom_gateways') ?>">
-                                Custom Gateways</a></li>
+                            <i class="mdi mdi-alert-octagram"></i>
 
-                        <li><a class="mdi mdi-cog" href="<?= site_url('sub_setting') ?>">
-                                Settings</a></li>
+                            <span>subscriptions</span>
 
-                    </ul>
+                        </a>
 
-                </li>
+                        <ul class="sub-menu" aria-expanded="false">
 
+                            <li><a class="typcn typcn-th-large" href="<?= site_url('sub_plan') ?>">
+                                    Subscription Plans</a></li>
+
+                            <li><a class="typcn typcn-th-list" href="<?= site_url('sub_request') ?>">
+                                    Subscription Requests</a></li>
+
+                        </ul>
+
+                    </li>
+                <?php } ?>
+
+                <?php if($user_role == 2 and in_array('payment_gateway', $sub_admin_permissions)){ ?>
+                    <li>
+
+                        <a href="javascript: void(0);" class="has-arrow waves-effect">
+
+                            <i class="mdi mdi-credit-card-multiple"></i>
+
+                            <span>Payment Gateway</span>
+
+                        </a>
+
+                        <ul class="sub-menu" aria-expanded="false">
+
+                            <li><a class="mdi mdi-credit-card-outline" href="<?= site_url('payment_gateways') ?>">
+                                    Payment Gateways</a></li>
+
+                            <li><a class="mdi mdi-wallet-membership" href="<?= site_url('custom_gateways') ?>">
+                                    Custom Gateways</a></li>
+
+                            <li><a class="mdi mdi-cog" href="<?= site_url('sub_setting') ?>">
+                                    Settings</a></li>
+
+                        </ul>
+
+                    </li>
+                <?php } elseif($user_role == 1) { ?>
+                    <li>
+
+                        <a href="javascript: void(0);" class="has-arrow waves-effect">
+
+                            <i class="mdi mdi-credit-card-multiple"></i>
+
+                            <span>Payment Gateway</span>
+
+                        </a>
+
+                        <ul class="sub-menu" aria-expanded="false">
+
+                            <li><a class="mdi mdi-credit-card-outline" href="<?= site_url('payment_gateways') ?>">
+                                    Payment Gateways</a></li>
+
+                            <li><a class="mdi mdi-wallet-membership" href="<?= site_url('custom_gateways') ?>">
+                                    Custom Gateways</a></li>
+
+                            <li><a class="mdi mdi-cog" href="<?= site_url('sub_setting') ?>">
+                                    Settings</a></li>
+
+                        </ul>
+
+                    </li>
+                <?php } ?>
 
 
                 <li class="menu-title"> <?php echo lang('push_notification'); ?></li>
-                <li>
+                <?php if($user_role == 2 and in_array('notification', $sub_admin_permissions)){ ?>
+                    <li>
 
-                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                        <a href="javascript: void(0);" class="has-arrow waves-effect">
 
-                        <i class="dripicons-broadcast"></i>
+                            <i class="dripicons-broadcast"></i>
 
-                        <span><?php echo lang('notification'); ?></span>
+                            <span><?php echo lang('notification'); ?></span>
 
-                    </a>
+                        </a>
 
-                    <ul class="sub-menu" aria-expanded="false">
+                        <ul class="sub-menu" aria-expanded="false">
 
-                        <li><a class="dripicons-broadcast" href="<?= site_url('announcement') ?>">
-                                <?php echo lang('announcement'); ?></a></li>
+                            <li><a class="dripicons-broadcast" href="<?= site_url('announcement') ?>">
+                                    <?php echo lang('announcement'); ?></a></li>
 
-                        <li><a class="dripicons-rocket" href="<?= site_url('notification_movie') ?>">
-                                <?php echo lang('movies'); ?></a></li>
-                        <li><a class="dripicons-rocket" href="<?= site_url('notification_web_series') ?>">
-                                <?php echo lang('web_series'); ?></a></li>
+                            <li><a class="dripicons-rocket" href="<?= site_url('notification_movie') ?>">
+                                    <?php echo lang('movies'); ?></a></li>
+                            <li><a class="dripicons-rocket" href="<?= site_url('notification_web_series') ?>">
+                                    <?php echo lang('web_series'); ?></a></li>
 
-                        <li><a class="mdi mdi-web-box" href="<?= site_url('notification_web_view') ?>">
-                                <?php echo lang('web_view'); ?></a></li>
+                            <li><a class="mdi mdi-web-box" href="<?= site_url('notification_web_view') ?>">
+                                    <?php echo lang('web_view'); ?></a></li>
 
-                        <li><a class="mdi mdi-web" href="<?= site_url('notification_external_browser') ?>">
-                                <?php echo lang('external_browser'); ?></a></li>
+                            <li><a class="mdi mdi-web" href="<?= site_url('notification_external_browser') ?>">
+                                    <?php echo lang('external_browser'); ?></a></li>
 
-                        <li><a class="typcn typcn-cog" href="<?= site_url('notification_setting') ?>">
-                                <?php echo lang('setting'); ?></a></li>
+                            <li><a class="typcn typcn-cog" href="<?= site_url('notification_setting') ?>">
+                                    <?php echo lang('setting'); ?></a></li>
 
-                    </ul>
+                        </ul>
 
-                </li>
-                <li>
-                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                    </li>
+                <?php } elseif($user_role == 1) { ?>
+                    <li>
 
-                        <i class="mdi mdi-telegram"></i>
+                        <a href="javascript: void(0);" class="has-arrow waves-effect">
 
-                        <span><?php echo lang('telegram_notification'); ?></span>
+                            <i class="dripicons-broadcast"></i>
 
-                    </a>
+                            <span><?php echo lang('notification'); ?></span>
 
-                    <ul class="sub-menu" aria-expanded="false">
+                        </a>
 
-                        <li><a class="dripicons-broadcast" href="<?= site_url('telegram_announcement') ?>">
-                                <?php echo lang('announcement'); ?></a></li>
+                        <ul class="sub-menu" aria-expanded="false">
 
-                        <li><a class="typcn typcn-cog" href="<?= site_url('telegram_setting') ?>">
-                                <?php echo lang('setting'); ?></a></li>
+                            <li><a class="dripicons-broadcast" href="<?= site_url('announcement') ?>">
+                                    <?php echo lang('announcement'); ?></a></li>
 
-                    </ul>
+                            <li><a class="dripicons-rocket" href="<?= site_url('notification_movie') ?>">
+                                    <?php echo lang('movies'); ?></a></li>
+                            <li><a class="dripicons-rocket" href="<?= site_url('notification_web_series') ?>">
+                                    <?php echo lang('web_series'); ?></a></li>
 
-                </li>
-                <li>
-                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                            <li><a class="mdi mdi-web-box" href="<?= site_url('notification_web_view') ?>">
+                                    <?php echo lang('web_view'); ?></a></li>
 
-                        <i class="mdi mdi-email"></i>
+                            <li><a class="mdi mdi-web" href="<?= site_url('notification_external_browser') ?>">
+                                    <?php echo lang('external_browser'); ?></a></li>
 
-                        <span>SMTP Setting</span>
+                            <li><a class="typcn typcn-cog" href="<?= site_url('notification_setting') ?>">
+                                    <?php echo lang('setting'); ?></a></li>
 
-                    </a>
-                    <ul class="sub-menu" aria-expanded="false">
-                        <li><a class="mdi mdi-email-mark-as-unread" href="<?= site_url('email_setting') ?>">
-                                Email Settings</a></li>
-                        <li><a class="mdi mdi-email-edit" href="<?= site_url('email_templates') ?>">
-                                Email Templates</a></li>
-                    </ul>
-                </li>
+                        </ul>
+
+                    </li>
+                <?php } ?>
+                <?php if($user_role == 2 and in_array('telegram_notification', $sub_admin_permissions)){ ?>
+                    <li>
+                        <a href="javascript: void(0);" class="has-arrow waves-effect">
+
+                            <i class="mdi mdi-telegram"></i>
+
+                            <span><?php echo lang('telegram_notification'); ?></span>
+
+                        </a>
+
+                        <ul class="sub-menu" aria-expanded="false">
+
+                            <li><a class="dripicons-broadcast" href="<?= site_url('telegram_announcement') ?>">
+                                    <?php echo lang('announcement'); ?></a></li>
+
+                            <li><a class="typcn typcn-cog" href="<?= site_url('telegram_setting') ?>">
+                                    <?php echo lang('setting'); ?></a></li>
+
+                        </ul>
+
+                    </li>
+                <?php } elseif($user_role == 1) { ?>
+                    <li>
+                        <a href="javascript: void(0);" class="has-arrow waves-effect">
+
+                            <i class="mdi mdi-telegram"></i>
+
+                            <span><?php echo lang('telegram_notification'); ?></span>
+
+                        </a>
+
+                        <ul class="sub-menu" aria-expanded="false">
+
+                            <li><a class="dripicons-broadcast" href="<?= site_url('telegram_announcement') ?>">
+                                    <?php echo lang('announcement'); ?></a></li>
+
+                            <li><a class="typcn typcn-cog" href="<?= site_url('telegram_setting') ?>">
+                                    <?php echo lang('setting'); ?></a></li>
+
+                        </ul>
+
+                    </li>
+                <?php } ?>
+                
+                <?php if($user_role == 2 and in_array('SMTP_setting', $sub_admin_permissions)){ ?>
+                    <li>
+                        <a href="javascript: void(0);" class="has-arrow waves-effect">
+
+                            <i class="mdi mdi-email"></i>
+
+                            <span>SMTP Setting</span>
+
+                        </a>
+                        <ul class="sub-menu" aria-expanded="false">
+                            <li><a class="mdi mdi-email-mark-as-unread" href="<?= site_url('email_setting') ?>">
+                                    Email Settings</a></li>
+                            <li><a class="mdi mdi-email-edit" href="<?= site_url('email_templates') ?>">
+                                    Email Templates</a></li>
+                        </ul>
+                    </li>
+                <?php } elseif($user_role == 1) { ?>
+                    <li>
+                        <a href="javascript: void(0);" class="has-arrow waves-effect">
+
+                            <i class="mdi mdi-email"></i>
+
+                            <span>SMTP Setting</span>
+
+                        </a>
+                        <ul class="sub-menu" aria-expanded="false">
+                            <li><a class="mdi mdi-email-mark-as-unread" href="<?= site_url('email_setting') ?>">
+                                    Email Settings</a></li>
+                            <li><a class="mdi mdi-email-edit" href="<?= site_url('email_templates') ?>">
+                                    Email Templates</a></li>
+                        </ul>
+                    </li>
+                <?php } ?>
 
 
                 <li class="menu-title"><?php echo lang('MISCELLANEOUS'); ?></li>
+                
+                <?php if($user_role == 2 and in_array('manage_user', $sub_admin_permissions)){ ?>
+                    <li>
+                        <a href="<?= site_url('manage_user') ?>" class="waves-effect">
 
-                <li>
-                    <a href="<?= site_url('manage_user') ?>" class="waves-effect">
+                            <i class="fas fa-user"></i>
 
-                        <i class="fas fa-user"></i>
+                            <span><?php echo lang('user_manager'); ?></span>
 
-                        <span><?php echo lang('user_manager'); ?></span>
+                        </a>
+                    </li>
+                <?php } elseif($user_role == 1) { ?>
+                    <li>
+                        <a href="<?= site_url('manage_user') ?>" class="waves-effect">
 
-                    </a>
-                </li>
+                            <i class="fas fa-user"></i>
 
-                <li>
-                    <a href="<?= site_url('manage_sub_admins') ?>" class="waves-effect">
+                            <span><?php echo lang('user_manager'); ?></span>
 
-                        <i class="fas fa-user"></i>
+                        </a>
+                    </li>
+                <?php } ?>
+                
+                <?php if($user_role == 2 and in_array('manage_sub_admins', $sub_admin_permissions)){ ?>
+                    <li>
+                        <a href="<?= site_url('manage_sub_admins') ?>" class="waves-effect">
 
-                        <span><?php echo lang('admin_manager'); ?></span>
+                            <i class="fas fa-user"></i>
 
-                    </a>
-                </li>
+                            <span><?php echo lang('admin_manager'); ?></span>
 
-                <li>
-                    <a href="<?= site_url('request_manager') ?>" class="waves-effect">
+                        </a>
+                    </li>
+                <?php } elseif($user_role == 1) { ?>
+                    <li>
+                        <a href="<?= site_url('manage_sub_admins') ?>" class="waves-effect">
 
-                        <i class="typcn typcn-edit"></i>
+                            <i class="fas fa-user"></i>
 
-                        <span><?php echo lang('request_manager'); ?></span>
+                            <span><?php echo lang('admin_manager'); ?></span>
 
-                    </a>
-                </li>
-                <li>
-                    <a href="<?= site_url('report_manager') ?>" class="waves-effect">
+                        </a>
+                    </li>
+                <?php } ?>
 
-                        <i class="typcn typcn-flag"></i>
+                <?php if($user_role == 2 and in_array('request_manager', $sub_admin_permissions)){ ?>
+                    <li>
+                        <a href="<?= site_url('request_manager') ?>" class="waves-effect">
 
-                        <span><?php echo lang('report_manager'); ?></span>
+                            <i class="typcn typcn-edit"></i>
 
-                    </a>
-                </li>
-                <li>
-                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                            <span><?php echo lang('request_manager'); ?></span>
 
-                        <i class="dripicons-duplicate"></i>
+                        </a>
+                    </li>
+                <?php } elseif($user_role == 1) { ?>
+                    <li>
+                        <a href="<?= site_url('request_manager') ?>" class="waves-effect">
 
-                        <span><?php echo lang('slider'); ?></span>
+                            <i class="typcn typcn-edit"></i>
 
-                    </a>
-                    
-                    <ul class="sub-menu" aria-expanded="false">
+                            <span><?php echo lang('request_manager'); ?></span>
 
-                        <li><a class="typcn typcn-image" href="<?= site_url('custom_slider') ?>">
-                                <?php echo lang('custom_slider'); ?></a></li>
+                        </a>
+                    </li>
+                <?php } ?> 
 
-                        <li><a class="typcn typcn-cog" href="<?= site_url('slider_settings') ?>">
-                                <?php echo lang('slider_settings'); ?></a></li>
+                <?php if($user_role == 2 and in_array('report_manager', $sub_admin_permissions)){ ?>
+                    <li>
+                        <a href="<?= site_url('report_manager') ?>" class="waves-effect">
 
-                    </ul>
-                </li>
+                            <i class="typcn typcn-flag"></i>
 
-                <li>
+                            <span><?php echo lang('report_manager'); ?></span>
 
-                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                        </a>
+                    </li>
+                <?php } elseif($user_role == 1) { ?>
+                    <li>
+                        <a href="<?= site_url('report_manager') ?>" class="waves-effect">
 
-                        <i class="mdi mdi-cog"></i>
+                            <i class="typcn typcn-flag"></i>
 
-                        <span><?php echo lang('settings'); ?></span>
+                            <span><?php echo lang('report_manager'); ?></span>
 
-                    </a>
+                        </a>
+                    </li>
+                <?php } ?> 
 
-                    <ul class="sub-menu" aria-expanded="false">
-                        <li><a class="typcn typcn-flash" href="<?= site_url('api_setting') ?>">
-                                <?php echo lang('API_setting'); ?></a></li>
-                        <li><a class="typcn typcn-vendor-android" href="<?= site_url('android_setting') ?>">
-                                <?php echo lang('ANDROID_setting'); ?></a></li>
-                        <li><a class="typcn typcn-device-desktop" href="<?= site_url('dashboard_setting') ?>">
-                                <?php echo lang('dashboard_setting'); ?></a></li>
-                        <li><a class="mdi mdi-google-drive" href="<?= site_url('google_drive') ?>">
-                                Google Drive</a></li>
-                        <li><a class="mdi mdi-currency-usd" href="<?= site_url('ads_setting') ?>">
-                                <?php echo lang('ADS_setting'); ?></a></li>
-                        <li><a class="mdi mdi-clock-outline" href="<?= site_url('cron_setting') ?>">
-                                <?php echo "Cron Setting" ?></a></li>
-                        <li><a class="typcn typcn-clipboard" href="<?= site_url('terms_and_conditions') ?>">
-                                <?php echo lang('terms_&_condition'); ?>s</a></li>
-                        <li><a class="mdi mdi-post-outline" href="<?= site_url('privacy_policy') ?>">
-                                <?php echo lang('privacy_policy'); ?></a></li>
-                    </ul>
-                </li>
+                <?php if($user_role == 2 and in_array('slider', $sub_admin_permissions)){ ?>
+                    <li>
+                        <a href="javascript: void(0);" class="has-arrow waves-effect">
+
+                            <i class="dripicons-duplicate"></i>
+
+                            <span><?php echo lang('slider'); ?></span>
+
+                        </a>
+                        
+                        <ul class="sub-menu" aria-expanded="false">
+
+                            <li><a class="typcn typcn-image" href="<?= site_url('custom_slider') ?>">
+                                    <?php echo lang('custom_slider'); ?></a></li>
+
+                            <li><a class="typcn typcn-cog" href="<?= site_url('slider_settings') ?>">
+                                    <?php echo lang('slider_settings'); ?></a></li>
+
+                        </ul>
+                    </li>
+                <?php } elseif($user_role == 1) { ?>
+                    <li>
+                        <a href="javascript: void(0);" class="has-arrow waves-effect">
+
+                            <i class="dripicons-duplicate"></i>
+
+                            <span><?php echo lang('slider'); ?></span>
+
+                        </a>
+                        
+                        <ul class="sub-menu" aria-expanded="false">
+
+                            <li><a class="typcn typcn-image" href="<?= site_url('custom_slider') ?>">
+                                    <?php echo lang('custom_slider'); ?></a></li>
+
+                            <li><a class="typcn typcn-cog" href="<?= site_url('slider_settings') ?>">
+                                    <?php echo lang('slider_settings'); ?></a></li>
+
+                        </ul>
+                    </li>
+                <?php } ?> 
 
 
-                <li>
+                <?php if($user_role == 2 and in_array('settings', $sub_admin_permissions)){ ?> 
+                    <li>
 
-                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                        <a href="javascript: void(0);" class="has-arrow waves-effect">
 
-                        <i class="dripicons-device-desktop"></i>
+                            <i class="mdi mdi-cog"></i>
 
-                        <span><?php echo lang('system'); ?></span>
+                            <span><?php echo lang('settings'); ?></span>
 
-                    </a>
+                        </a>
 
-                    <ul class="sub-menu" aria-expanded="false">
+                        <ul class="sub-menu" aria-expanded="false">
+                            <li><a class="typcn typcn-flash" href="<?= site_url('api_setting') ?>">
+                                    <?php echo lang('API_setting'); ?></a></li>
+                            <li><a class="typcn typcn-vendor-android" href="<?= site_url('android_setting') ?>">
+                                    <?php echo lang('ANDROID_setting'); ?></a></li>
+                            <li><a class="typcn typcn-device-desktop" href="<?= site_url('dashboard_setting') ?>">
+                                    <?php echo lang('dashboard_setting'); ?></a></li>
+                            <li><a class="mdi mdi-google-drive" href="<?= site_url('google_drive') ?>">
+                                    Google Drive</a></li>
+                            <li><a class="mdi mdi-currency-usd" href="<?= site_url('ads_setting') ?>">
+                                    <?php echo lang('ADS_setting'); ?></a></li>
+                            <li><a class="mdi mdi-clock-outline" href="<?= site_url('cron_setting') ?>">
+                                    <?php echo "Cron Setting" ?></a></li>
+                            <li><a class="typcn typcn-clipboard" href="<?= site_url('terms_and_conditions') ?>">
+                                    <?php echo lang('terms_&_condition'); ?>s</a></li>
+                            <li><a class="mdi mdi-post-outline" href="<?= site_url('privacy_policy') ?>">
+                                    <?php echo lang('privacy_policy'); ?></a></li>
+                        </ul>
+                    </li>
+                <?php } elseif($user_role == 1) { ?>
+                    <li>
 
-                        <li><a href="javascript: void(0);"
-                                class="has-arrow mdi mdi-database"><?php echo lang('database'); ?></a>
-                            <ul class="sub-menu" aria-expanded="true">
-                                <li><a class="mdi mdi-database" href="<?= site_url('db_manager') ?>">Database
-                                        Manager</a></li>
-                                <li><a class="mdi mdi-database-import" href="<?= site_url('db_import') ?>">Database
-                                        Import</a></li>
-                                <li><a class="mdi mdi-database-export" href="<?= site_url('db_export') ?>">Database
-                                        Export</a></li>
-                            </ul>
-                        </li>
+                        <a href="javascript: void(0);" class="has-arrow waves-effect">
 
-                        <li><a class="ion ion-md-git-compare" href="<?= site_url('update') ?>">
-                                <?php echo lang('update'); ?></a></li>
+                            <i class="mdi mdi-cog"></i>
 
-                    </ul>
+                            <span><?php echo lang('settings'); ?></span>
 
-                </li>
+                        </a>
+
+                        <ul class="sub-menu" aria-expanded="false">
+                            <li><a class="typcn typcn-flash" href="<?= site_url('api_setting') ?>">
+                                    <?php echo lang('API_setting'); ?></a></li>
+                            <li><a class="typcn typcn-vendor-android" href="<?= site_url('android_setting') ?>">
+                                    <?php echo lang('ANDROID_setting'); ?></a></li>
+                            <li><a class="typcn typcn-device-desktop" href="<?= site_url('dashboard_setting') ?>">
+                                    <?php echo lang('dashboard_setting'); ?></a></li>
+                            <li><a class="mdi mdi-google-drive" href="<?= site_url('google_drive') ?>">
+                                    Google Drive</a></li>
+                            <li><a class="mdi mdi-currency-usd" href="<?= site_url('ads_setting') ?>">
+                                    <?php echo lang('ADS_setting'); ?></a></li>
+                            <li><a class="mdi mdi-clock-outline" href="<?= site_url('cron_setting') ?>">
+                                    <?php echo "Cron Setting" ?></a></li>
+                            <li><a class="typcn typcn-clipboard" href="<?= site_url('terms_and_conditions') ?>">
+                                    <?php echo lang('terms_&_condition'); ?>s</a></li>
+                            <li><a class="mdi mdi-post-outline" href="<?= site_url('privacy_policy') ?>">
+                                    <?php echo lang('privacy_policy'); ?></a></li>
+                        </ul>
+                    </li>
+                <?php } ?> 
+                <?php if($user_role == 2 and in_array('system', $sub_admin_permissions)){ ?> 
+                    <li>
+
+                        <a href="javascript: void(0);" class="has-arrow waves-effect">
+
+                            <i class="dripicons-device-desktop"></i>
+
+                            <span><?php echo lang('system'); ?></span>
+
+                        </a>
+
+                        <ul class="sub-menu" aria-expanded="false">
+
+                            <li><a href="javascript: void(0);"
+                                    class="has-arrow mdi mdi-database"><?php echo lang('database'); ?></a>
+                                <ul class="sub-menu" aria-expanded="true">
+                                    <li><a class="mdi mdi-database" href="<?= site_url('db_manager') ?>">Database
+                                            Manager</a></li>
+                                    <li><a class="mdi mdi-database-import" href="<?= site_url('db_import') ?>">Database
+                                            Import</a></li>
+                                    <li><a class="mdi mdi-database-export" href="<?= site_url('db_export') ?>">Database
+                                            Export</a></li>
+                                </ul>
+                            </li>
+
+                            <li><a class="ion ion-md-git-compare" href="<?= site_url('update') ?>">
+                                    <?php echo lang('update'); ?></a></li>
+
+                        </ul>
+
+                    </li>
+                <?php } elseif($user_role == 1) { ?>
+                    <li>
+
+                        <a href="javascript: void(0);" class="has-arrow waves-effect">
+
+                            <i class="dripicons-device-desktop"></i>
+
+                            <span><?php echo lang('system'); ?></span>
+
+                        </a>
+
+                        <ul class="sub-menu" aria-expanded="false">
+
+                            <li><a href="javascript: void(0);"
+                                    class="has-arrow mdi mdi-database"><?php echo lang('database'); ?></a>
+                                <ul class="sub-menu" aria-expanded="true">
+                                    <li><a class="mdi mdi-database" href="<?= site_url('db_manager') ?>">Database
+                                            Manager</a></li>
+                                    <li><a class="mdi mdi-database-import" href="<?= site_url('db_import') ?>">Database
+                                            Import</a></li>
+                                    <li><a class="mdi mdi-database-export" href="<?= site_url('db_export') ?>">Database
+                                            Export</a></li>
+                                </ul>
+                            </li>
+
+                            <li><a class="ion ion-md-git-compare" href="<?= site_url('update') ?>">
+                                    <?php echo lang('update'); ?></a></li>
+
+                        </ul>
+
+                    </li>
+                <?php } ?> 
             </ul>
         </div>
         <!-- Sidebar -->

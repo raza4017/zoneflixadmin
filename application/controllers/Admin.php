@@ -125,14 +125,20 @@ class Admin extends CI_Controller
             if ($this->Admin_model->login($this->input->post('email'), md5($this->input->post('password')))) {
 
                 $userData = $this->Admin_model->getUserData($this->input->post('email'));
-
-                if ($userData->role == 1) {
+                 
+                if ($userData->role == 1 or $userData->role == 2) {
                     $data = array(
                         'name' => $userData->name,
                         'email' => $userData->email,
                         'role' => $userData->role,
                         'currently_logged_in' => 1
                     );
+                    $admin_permissions = $this->Admin_model->get_admin_permissions($userData->id);
+                    $permissions = array();
+                    foreach($admin_permissions as $permission){
+                        array_push($permissions, $permission->name);
+                    }
+                    $this->session->set_userdata('permissions', $permissions);
                     $this->session->set_userdata($data);
                     $this->db->query('DELETE FROM ci_sessions WHERE timestamp < UNIX_TIMESTAMP(DATE_SUB(NOW(), INTERVAL 1 DAY))');
                     redirect("index");
