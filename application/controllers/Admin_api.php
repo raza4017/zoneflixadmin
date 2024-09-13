@@ -145,8 +145,16 @@ class Admin_api extends CI_Controller {
 		echo $this->Admin_api_model->get_all_users();
 	}
 
+	function get_all_sub_admins() {
+		echo $this->Admin_api_model->get_all_sub_admins();
+	}
+
 	function add_user() {
 		echo $this->Admin_api_model->add_user($_POST['add_modal_User_Name'], $_POST['Add_modal_Email'], md5($_POST['Add_modal_Password']));
+	}
+
+	function add_sub_admin() {
+		echo $this->Admin_api_model->add_sub_admin($_POST['add_modal_Admin_Name'], $_POST['Add_modal_Email'], $_POST['Add_modal_Balance'],md5($_POST['Add_modal_Password']));
 	}
 
 	function delete_user() {

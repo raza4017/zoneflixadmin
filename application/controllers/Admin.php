@@ -606,6 +606,27 @@ class Admin extends CI_Controller
         }
     }
 
+    function manage_sub_admins()
+    {
+        if ($this->input->post('notify_user')) {
+            $this->load->model('Notification_model');
+            echo $this->Notification_model->sendNotification($this->input->post('heading'), $this->input->post('message'),
+                $this->input->post('large_icon'), $this->input->post('big_picture'), $this->input->post('data'),
+                $this->input->post('user_ids'));
+        } else if ($this->input->post('get_menu_list')) {
+            echo json_encode($this->Admin_model->get_menus());
+        } else {
+            $data['config'] = $this->Admin_model->getConfig();
+            $this->load->view('manage_admins', $data);
+        }
+    }
+
+    function set_permissions(){
+        $menus = $this->Admin_model->get_menus(1);
+        var_dump($menus);
+        exit;
+    }
+
     function telegram_setting()
     {
         $data['config'] = $this->Admin_model->getConfig();

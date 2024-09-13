@@ -508,12 +508,46 @@ class Admin_api_model extends CI_Model {
             'host' => $this->db->hostname,
 			'charset' => 'utf8'
         );
-         
+        $where = "role=0"; //get only users
         $order = "ORDER BY id DESC";
         require(APPPATH.'/libraries/ssp.class.php');
          
         return json_encode(
-            SSP::simple( $_GET, $sql_details, $table, $primaryKey, $columns, $order )
+            SSP::simple( $_GET, $sql_details, $table, $primaryKey, $columns, $order, $where)
+        );
+	}
+
+	//Subadmin methods
+
+	function get_all_sub_admins() {
+		
+        $table = 'user_db';
+         
+        $primaryKey = 'id';
+        
+        $columns = array(
+			array( 'db' => 'id', 'dt' => 2 ),
+			array( 'db' => 'name', 'dt' => 3 ),
+			array( 'db' => 'email',  'dt' => 4 ),
+			array( 'db' => 'role',   'dt' => 5 ),
+			array( 'db' => 'amount',   'dt' => 6 )
+		);
+         
+        $sql_details = array(
+            'user' => $this->db->username,
+            'pass' => $this->db->password,
+            'db'   => $this->db->database,
+            'host' => $this->db->hostname,
+			'charset' => 'utf8'
+        );
+         
+		$where = "role=2"; //role=2 for subadmins
+        $order = "ORDER BY id DESC";
+
+        require(APPPATH.'/libraries/ssp.class.php');
+         
+        return json_encode(
+            SSP::simple( $_GET, $sql_details, $table, $primaryKey, $columns, $order, $where )
         );
 	}
 
@@ -535,6 +569,30 @@ class Admin_api_model extends CI_Model {
 				echo "Something Went Wrong";
 			} else {
 				echo "User Added successfully";
+			}
+		}
+	}
+
+	function add_sub_admin($UserName, $UserEmail, $UserBalance, $UserPassword) {
+		$this->db->where('email', $UserEmail);
+		$this->db->from("user_db");
+		$totalUser = $this->db->count_all_results();
+		if($totalUser != 0) {
+			echo "Email Already Registered";
+		} else {
+			$this->db->set('name', $UserName);
+			$this->db->set('email', $UserEmail);
+			$this->db->set('password', $UserPassword);
+			$this->db->set('active_subscription', 'Free');
+			$this->db->set('subscription_start', '0000-00-00');
+			$this->db->set('subscription_exp', '0000-00-00');
+			$this->db->set('role', '2'); //role=2 for subadmin
+			$this->db->set('amount', $UserBalance);
+			$this->db->insert('user_db');
+			if($this->db->insert_id() == "") {
+				echo "Something Went Wrong";
+			} else {
+				echo "Sub Admin Added successfully";
 			}
 		}
 	}

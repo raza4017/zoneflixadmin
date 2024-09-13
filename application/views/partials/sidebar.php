@@ -358,6 +358,17 @@
 
                     </a>
                 </li>
+
+                <li>
+                    <a href="<?= site_url('manage_sub_admins') ?>" class="waves-effect">
+
+                        <i class="fas fa-user"></i>
+
+                        <span><?php echo lang('admin_manager'); ?></span>
+
+                    </a>
+                </li>
+
                 <li>
                     <a href="<?= site_url('request_manager') ?>" class="waves-effect">
 

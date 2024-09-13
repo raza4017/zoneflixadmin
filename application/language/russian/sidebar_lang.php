@@ -33,6 +33,7 @@ $lang['subscriptions']		= 'Subscriptions';
 $lang['plans']		= 'Plans';
 $lang['MISCELLANEOUS']		= 'MISCELLANEOUS';
 $lang['user_manager']		= 'User Manager';
+$lang['admin_manager']		= 'Субадминистратор';
 $lang['request_manager']		= 'Request Manager';
 $lang['report_manager']		= 'Report Manager';
 $lang['slider']		= 'Slider';

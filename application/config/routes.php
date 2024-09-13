@@ -82,6 +82,7 @@ $route['custom_slider'] = 'admin/custom_slider';
 $route['report_manager'] = 'admin/report_manager';
 $route['request_manager'] = 'admin/request_manager';
 $route['manage_user'] = 'admin/manage_user';
+$route['manage_sub_admins'] = 'admin/manage_sub_admins';
 $route['telegram_setting'] = 'admin/telegram_setting';
 $route['telegram_announcement'] = 'admin/telegram_announcement';
 $route['payment_gateways'] = 'admin/payment_gateways';
@@ -125,6 +126,8 @@ $route['scrap_topcinema'] = 'admin/scrap_topcinema';
 $route['google_drive'] = 'admin/google_drive';
 $route['custom_tags'] = 'admin/custom_tags';
 $route['email_templates'] = 'admin/email_templates';
+
+$route['set_permissions'] = 'admin/set_permissions';
 
 //Web View
 $route['privacy_policy/webview'] = 'webview/privacy_policy_webview';

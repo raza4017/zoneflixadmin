@@ -573,6 +573,36 @@ class Admin_model extends CI_Model {
         return $query->result();
     }
 
+	function get_menus($roleId) {
+		try{
+			$query = $this->db->select('menus.*')
+                 ->from('menus')
+                 ->join('permissions', 'menus.id = permissions.menu_id', 'left')
+                 ->where('permissions.role_id', $roleId)
+                 ->where('permissions.can_view', true)
+                 ->where('menus.is_active', true)
+                 ->order_by('menus.order', 'ASC');
+		}catch(\Exception $e){
+			var_dump($e);
+			exit;
+		}
+		
+        //$query = $this->db->get('menus');
+        return $query->get()->result();
+    }
+
+	function get_sub_menus($roleId) {
+		$query = $this->db->select('submenus.*, submenus.menu_id')
+                 ->from('submenus')
+                 ->join('permissions', 'submenus.id = permissions.submenu_id', 'left')
+                 ->where('permissions.role_id', $roleId)
+                 ->where('permissions.can_view', true)
+                 ->where('submenus.is_active', true)
+                 ->order_by('submenus.order', 'ASC');
+        //$query = $this->db->get('menus');
+        return $query->get()->result();
+    }
+
     function add_subscription($user_id, $subscription_id, $notify) {
         if($subscription_id == 0) {
             $this->db->set('active_subscription', "Free");
