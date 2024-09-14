@@ -1,6 +1,13 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
-?><!doctype html>
+?>
+
+<?php 
+        $sub_admin_permissions = $this->session->userdata('permissions'); 
+        $user_role = $this->session->userdata('role');
+?>
+
+<!doctype html>
 <html lang="en">
 
     <head>
@@ -28,7 +35,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <!-- Start right Content here -->
             <!-- ============================================================== -->
             <div class="main-content">
-
+            <?php if(($user_role == 2 and in_array('dashboard_sidebar', $sub_admin_permissions)) or $user_role == 1){ ?>
                 <div class="page-content">
                     <div class="container-fluid">
 
@@ -601,6 +608,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
                     </div> <!-- container-fluid -->
                 </div>
+            <?php } ?>
                 <!-- End Page-content -->
 
                 <?php include("partials/footer_rights.php"); ?>

@@ -4,6 +4,11 @@
         redirect('login');    
     } 
 ?> 
+
+<?php 
+        $sub_admin_permissions = $this->session->userdata('permissions'); 
+        $user_role = $this->session->userdata('role');
+?>
 <header id="page-topbar">
                 <div class="navbar-header">
                     <div class="d-flex">
@@ -39,9 +44,21 @@
                                     </a>
 
                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                                    <a class="dropdown-item" href="<?= site_url('add_movie') ?>">Add Movie</a>
-                                    <a class="dropdown-item" href="<?= site_url('add_web_series') ?>">Add Web Series</a>
-                                    <a class="dropdown-item" href="<?= site_url('add_channel') ?>">Add Live TV</a>
+                                    <?php if($user_role == 2 and in_array('movies', $sub_admin_permissions)){ ?>
+                                        <a class="dropdown-item" href="<?= site_url('add_movie') ?>">Add Movie</a>
+                                    <?php } elseif($user_role == 1) { ?>
+                                        <a class="dropdown-item" href="<?= site_url('add_movie') ?>">Add Movie</a>
+                                    <?php } ?>
+                                    <?php if($user_role == 2 and in_array('web_series', $sub_admin_permissions)){ ?>
+                                        <a class="dropdown-item" href="<?= site_url('add_web_series') ?>">Add Web Series</a>
+                                    <?php } elseif($user_role == 1) { ?>
+                                        <a class="dropdown-item" href="<?= site_url('add_web_series') ?>">Add Web Series</a>
+                                    <?php } ?>
+                                    <?php if($user_role == 2 and in_array('live_tv', $sub_admin_permissions)){ ?>
+                                        <a class="dropdown-item" href="<?= site_url('add_channel') ?>">Add Live TV</a>
+                                    <?php } elseif($user_role == 1) { ?>
+                                        <a class="dropdown-item" href="<?= site_url('add_channel') ?>">Add Live TV</a>
+                                    <?php } ?>
                                 </div>
                             </div>
                         </div>
