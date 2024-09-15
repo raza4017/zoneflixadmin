@@ -142,11 +142,15 @@ class Admin_api extends CI_Controller {
 	}
 
 	function get_all_users() {
-		echo $this->Admin_api_model->get_all_users();
+		$role = $this->session->userdata('role');
+		$id = $this->session->userdata('user_id');
+		echo $this->Admin_api_model->get_all_users($role, $id);
 	}
 
 	function get_all_sub_admins() {
-		echo $this->Admin_api_model->get_all_sub_admins();
+		$role = $this->session->userdata('role');
+		$id = $this->session->userdata('user_id');
+		echo $this->Admin_api_model->get_all_sub_admins($role, $id);
 	}
 
 	function add_user() {

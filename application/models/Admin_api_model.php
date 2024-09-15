@@ -488,7 +488,7 @@ class Admin_api_model extends CI_Model {
 		return false;
 	}
 
-	function get_all_users() {
+	function get_all_users($role = null, $id = null) {
         $table = 'user_db';
          
         $primaryKey = 'id';
@@ -509,6 +509,9 @@ class Admin_api_model extends CI_Model {
 			'charset' => 'utf8'
         );
         $where = "role=0"; //get only users
+		if($id and $role and $role == 2){
+			$where = $where . " and agent_id=".$id;
+		}
         $order = "ORDER BY id DESC";
         require(APPPATH.'/libraries/ssp.class.php');
          
@@ -519,7 +522,7 @@ class Admin_api_model extends CI_Model {
 
 	//Subadmin methods
 
-	function get_all_sub_admins() {
+	function get_all_sub_admins($role = null, $id = null) {
 		
         $table = 'user_db';
          
@@ -542,6 +545,9 @@ class Admin_api_model extends CI_Model {
         );
          
 		$where = "role=2"; //role=2 for subadmins
+		if($id and $role and $role == 2){
+			$where = $where . " and agent_id=".$id;
+		}
         $order = "ORDER BY id DESC";
 
         require(APPPATH.'/libraries/ssp.class.php');
