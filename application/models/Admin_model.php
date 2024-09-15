@@ -671,14 +671,14 @@ class Admin_model extends CI_Model {
 				$user = $query->row();
 				$sub_time =  $subscription->time;
 				$flag = false;
-				if($sub_time == 365 and $user and $user->amount>=5){
+				if($sub_time == 365 and $user and $user->amount>=12){
 					$flag = true;
-					$this->db->set('amount', $user->amount - 5);
+					$this->db->set('amount', $user->amount - 12);
 					$this->db->where('id', $agent_id);
 					$this->db->update('user_db');
-				}else if($sub_time == 186 and $user and $user->amount>=4){
+				}else if($sub_time == 186 and $user and $user->amount>=6){
 					$flag = true;
-					$this->db->set('amount', $user->amount - 4);
+					$this->db->set('amount', $user->amount - 6);
 					$this->db->where('id', $agent_id);
 					$this->db->update('user_db');
 				}
@@ -688,15 +688,15 @@ class Admin_model extends CI_Model {
 					$this->db->where('id', $agent_id);
 					$this->db->update('user_db');
 				}
-				else if($sub_time == 31 and $user and $user->amount>=2){
+				else if($sub_time == 31 and $user and $user->amount>=1){
 					$flag = true;
-					$this->db->set('amount', $user->amount - 2);
+					$this->db->set('amount', $user->amount - 1);
 					$this->db->where('id', $agent_id);
 					$this->db->update('user_db');
 				}
-				else if($sub_time == 1 and $user and $user->amount>=1){
+				else if($sub_time == 1 and $user and $user->amount>=0){
 					$flag = true;
-					$this->db->set('amount', $user->amount - 1);
+					$this->db->set('amount', $user->amount - 0);
 					$this->db->where('id', $agent_id);
 					$this->db->update('user_db');
 				}else{
