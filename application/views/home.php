@@ -49,6 +49,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     </ol>
                                 </div>
                                 <div class="col-md-4">
+                                    <?php if($user_role!=2){ ?>
                                     <div class="float-end d-none d-md-block">
                                       <button class="btn btn-primary" type="button" id="dropdownMenuButton" onclick="window.location.href='<?= site_url('update') ?>'">
                                         <i class="ion ion-md-git-compare me-2"></i> Update
@@ -61,6 +62,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                         ?>
                                       </button>
                                     </div>
+                                    <?php } ?>
                                 </div>
                             </div>
                         </div>

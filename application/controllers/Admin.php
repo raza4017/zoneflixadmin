@@ -109,6 +109,9 @@ class Admin extends CI_Controller
             } else {
                 $data['PanelUpdateDialog'] = 0;
             }
+            if($this->session->userdata['role'] == 2){
+                $data['PanelUpdateDialog'] = 0;
+            }
 
             if(ini_get('open_basedir') && ini_get('shell_exec')) {
                 $data['server_status'] = $this->ServerStatsModel->getServerStatus();
