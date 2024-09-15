@@ -35,7 +35,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
             <!-- Start right Content here -->
             <!-- ============================================================== -->
             <div class="main-content">
-            <?php if(($user_role == 2 and in_array('dashboard_sidebar', $sub_admin_permissions)) or $user_role == 1){ ?>
+            
                 <div class="page-content">
                     <div class="container-fluid">
 
@@ -129,7 +129,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         <?php
                         }
                         ?>
-
+                        
                         <div class="row">
                             <div class="col-xl-3 col-md-6">
                                 <div class="card mini-stat bg-primary text-white">
@@ -216,8 +216,26 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                                     </div>
                                 </div>
                             </div>
+                            <?php if($user_role == 2){ ?>
+                              <div class="col-xl-3 col-md-6">
+                                  <div class="card mini-stat bg-primary text-white">
+                                      <div class="card-body">
+                                          <div class="mb-4">
+                                              <div class="float-start mini-stat-img me-4">
+                                                  <img src="assets/images/services-icon/04.png" alt="">
+                                              </div>
+                                              <h5 class="font-size-16 text-uppercase text-white-50">Balance</h5>
+                                              <h4 class="fw-medium font-size-24"><?php echo isset($user)? $user->amount:0 ?> <i
+                                                      class="mdi mdi-arrow-up text-success ms-2"></i></h4>
+                                          </div>
+                                          
+                                      </div>
+                                  </div>
+                              </div>
+                            <?php } ?>
                         </div>
                         <!-- end row -->
+                        <?php if($user_role == 1){ ?>
                         <div class="row">
                             <?php if(ini_get('open_basedir') && ini_get('shell_exec')) { ?>
 
@@ -573,6 +591,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
                         		</div>
                         	</div>
                         </div>
+                        <?php } ?>
 
                         <!-- LicenseModal -->
             <div class="modal fade" id="PanelUpdateModal" tabindex="-1" aria-labelledby="PanelUpdateModallLabel"
@@ -608,7 +627,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
                     </div> <!-- container-fluid -->
                 </div>
-            <?php } ?>
+            
                 <!-- End Page-content -->
 
                 <?php include("partials/footer_rights.php"); ?>

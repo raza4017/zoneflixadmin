@@ -11,25 +11,20 @@
         <div id="sidebar-menu">
             <!-- Left Menu Start -->
             <ul class="metismenu list-unstyled" id="side-menu">
-                <?php if($user_role == 2 and in_array('dashboard_sidebar', $sub_admin_permissions)){ ?>
-                    <li class="menu-title"><?php echo lang('Main'); ?></li>
-                    <li>
-                        <a href="<?= site_url('index') ?>" class="waves-effect">
-                            <i class="ti-home"></i>
-                            <span><?php echo lang('dashboard_sidebar'); ?></span>
-                        </a>
-                    </li>
-                <?php } elseif($user_role == 1) { ?> 
-                    <li class="menu-title"><?php echo lang('Main'); ?></li>
-                    <li>
-                        <a href="<?= site_url('index') ?>" class="waves-effect">
-                            <i class="ti-home"></i>
-                            <span><?php echo lang('dashboard_sidebar'); ?></span>
-                        </a>
-                    </li>
+
+                <li class="menu-title"><?php echo lang('Main'); ?></li>
+                <li>
+                    <a href="<?= site_url('index') ?>" class="waves-effect">
+                        <i class="ti-home"></i>
+                        <span><?php echo lang('dashboard_sidebar'); ?></span>
+                    </a>
+                </li>
+                <?php if(in_array('movies', $sub_admin_permissions) or in_array('web_series', $sub_admin_permissions) or in_array('live_tv', $sub_admin_permissions)) { ?>
+                    <li class="menu-title"><?php echo lang('Contents'); ?></li>
+                <?php }else if($user_role == 1) {?>
+                    <li class="menu-title"><?php echo lang('Contents'); ?></li>
                 <?php } ?>
 
-                <li class="menu-title"><?php echo lang('Contents'); ?></li>
                 <?php if($user_role == 2 and in_array('movies', $sub_admin_permissions)){ ?>
                     <li>
 
@@ -168,7 +163,11 @@
                     </li>
                 <?php } ?>
 
-                <li class="menu-title"><?php echo lang('special'); ?></li>
+                <?php if(in_array('genres', $sub_admin_permissions) or in_array('live_tv_genres', $sub_admin_permissions) or in_array('Upcoming Contents', $sub_admin_permissions) or in_array('content_networks', $sub_admin_permissions) or in_array('custom_tags', $sub_admin_permissions)){ ?>
+                    <li class="menu-title"><?php echo lang('special'); ?></li>
+                <?php } elseif($user_role == 1) { ?>
+                    <li class="menu-title"><?php echo lang('special'); ?></li>
+                <?php } ?>
                 <?php if($user_role == 2 and in_array('genres', $sub_admin_permissions)){ ?>
                     <li>
 
@@ -312,8 +311,12 @@
                         </a>
                     </li>
                 <?php } ?>
-
-                <li class="menu-title"><?php echo lang('import'); ?></li>
+                
+                <?php if(in_array('search', $sub_admin_permissions) or in_array('bulk', $sub_admin_permissions) or in_array('Scrap', $sub_admin_permissions)){ ?>
+                    <li class="menu-title"><?php echo lang('import'); ?></li>
+                <?php } elseif($user_role == 1) { ?>
+                    <li class="menu-title"><?php echo lang('import'); ?></li>
+                <?php } ?>
                 <?php if($user_role == 2 and in_array('search', $sub_admin_permissions)){ ?>
                     <li>
 
@@ -452,7 +455,11 @@
                     </li>
                 <?php } ?>
 
-                <li class="menu-title"><?php echo lang('SUBSCRIPTION'); ?></li>
+                <?php if(in_array('coupon_manager', $sub_admin_permissions) or in_array('subscriptions', $sub_admin_permissions) or in_array('payment_gateway', $sub_admin_permissions)){ ?>
+                    <li class="menu-title"><?php echo lang('SUBSCRIPTION'); ?></li>
+                <?php } elseif($user_role == 1) { ?>
+                    <li class="menu-title"><?php echo lang('SUBSCRIPTION'); ?></li>
+                <?php } ?>
                 <?php if($user_role == 2 and in_array('coupon_manager', $sub_admin_permissions)){ ?>
                     <li>
                         <a href="<?= site_url('coupon_manager') ?>" class="waves-effect">
@@ -575,8 +582,11 @@
                     </li>
                 <?php } ?>
 
-
-                <li class="menu-title"> <?php echo lang('push_notification'); ?></li>
+                <?php if(in_array('notification', $sub_admin_permissions) or in_array('telegram_notification', $sub_admin_permissions) or in_array('SMTP_setting', $sub_admin_permissions)){ ?>
+                    <li class="menu-title"> <?php echo lang('push_notification'); ?></li>
+                <?php } elseif($user_role == 1) { ?>
+                    <li class="menu-title"> <?php echo lang('push_notification'); ?></li>
+                <?php } ?>
                 <?php if($user_role == 2 and in_array('notification', $sub_admin_permissions)){ ?>
                     <li>
 
@@ -722,8 +732,11 @@
                     </li>
                 <?php } ?>
 
-
-                <li class="menu-title"><?php echo lang('MISCELLANEOUS'); ?></li>
+                <?php if(in_array('manage_user', $sub_admin_permissions) or in_array('manage_sub_admins', $sub_admin_permissions) or in_array('request_manager', $sub_admin_permissions) or in_array('report_manager', $sub_admin_permissions) or in_array('slider', $sub_admin_permissions) or in_array('settings', $sub_admin_permissions) or in_array('system', $sub_admin_permissions)){ ?>
+                    <li class="menu-title"><?php echo lang('MISCELLANEOUS'); ?></li>
+                <?php } elseif($user_role == 1) { ?>
+                    <li class="menu-title"><?php echo lang('MISCELLANEOUS'); ?></li>
+                <?php } ?>
                 
                 <?php if($user_role == 2 and in_array('manage_user', $sub_admin_permissions)){ ?>
                     <li>

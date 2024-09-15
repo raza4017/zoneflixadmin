@@ -44,6 +44,12 @@ class Admin_model extends CI_Model {
 		return $query->row();
 	}
 
+	function getUser($id) {
+		$this->db->where('id', $id);
+		$query = $this->db->get('user_db');
+		return $query->row();
+	}
+
 	function dashboardData() {
 		$Total_Movie = $this->db->count_all('movies');
 		$Total_WebSeries = $this->db->count_all('web_series');

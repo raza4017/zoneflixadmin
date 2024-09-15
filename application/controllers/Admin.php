@@ -101,6 +101,8 @@ class Admin extends CI_Controller
             $data['MostPopularWebSeries'] = $this->Admin_model->MostPopularWebSeries();
             $data['NewUsers'] = $this->Admin_model->NewUsers();
 
+            $data['user'] = $this->Admin_model->getUser($this->session->userdata['user_id']);
+
 
             if ($this->Admin_model->getConfig()->Dashboard_Version != $this->Admin_model->remoteConfig()->version) {
                 $data['PanelUpdateDialog'] = 1;
