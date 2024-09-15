@@ -150,11 +150,19 @@ class Admin_api extends CI_Controller {
 	}
 
 	function add_user() {
-		echo $this->Admin_api_model->add_user($_POST['add_modal_User_Name'], $_POST['Add_modal_Email'], md5($_POST['Add_modal_Password']));
+		$agent_id = null;
+		if($this->session->userdata('user_id')){
+			$agent_id = $this->session->userdata('user_id');
+		}
+		echo $this->Admin_api_model->add_user($_POST['add_modal_User_Name'], $_POST['Add_modal_Email'], md5($_POST['Add_modal_Password']), $agent_id);
 	}
 
 	function add_sub_admin() {
-		echo $this->Admin_api_model->add_sub_admin($_POST['add_modal_Admin_Name'], $_POST['Add_modal_Email'], $_POST['Add_modal_Balance'],md5($_POST['Add_modal_Password']));
+		$agent_id = null;
+		if($this->session->userdata('user_id')){
+			$agent_id = $this->session->userdata('user_id');
+		}
+		echo $this->Admin_api_model->add_sub_admin($_POST['add_modal_Admin_Name'], $_POST['Add_modal_Email'], $_POST['Add_modal_Balance'],md5($_POST['Add_modal_Password']), $agent_id);
 	}
 
 	function delete_user() {

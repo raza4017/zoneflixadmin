@@ -551,7 +551,7 @@ class Admin_api_model extends CI_Model {
         );
 	}
 
-	function add_user($UserName, $UserEmail, $UserPassword) {
+	function add_user($UserName, $UserEmail, $UserPassword, $agent_id = null) {
 		$this->db->where('email', $UserEmail);
 		$this->db->from("user_db");
 		$totalUser = $this->db->count_all_results();
@@ -564,6 +564,7 @@ class Admin_api_model extends CI_Model {
 			$this->db->set('active_subscription', 'Free');
 			$this->db->set('subscription_start', '0000-00-00');
 			$this->db->set('subscription_exp', '0000-00-00');
+			$this->db->set('agent_id', $agent_id);
 			$this->db->insert('user_db');
 			if($this->db->insert_id() == "") {
 				echo "Something Went Wrong";
@@ -573,7 +574,7 @@ class Admin_api_model extends CI_Model {
 		}
 	}
 
-	function add_sub_admin($UserName, $UserEmail, $UserBalance, $UserPassword) {
+	function add_sub_admin($UserName, $UserEmail, $UserBalance, $UserPassword, $agent_id = null) {
 		$this->db->where('email', $UserEmail);
 		$this->db->from("user_db");
 		$totalUser = $this->db->count_all_results();
@@ -588,6 +589,7 @@ class Admin_api_model extends CI_Model {
 			$this->db->set('subscription_exp', '0000-00-00');
 			$this->db->set('role', '2'); //role=2 for subadmin
 			$this->db->set('amount', $UserBalance);
+			$this->db->set('agent_id', $agent_id);
 			$this->db->insert('user_db');
 			if($this->db->insert_id() == "") {
 				echo "Something Went Wrong";

@@ -643,7 +643,8 @@ class Admin_model extends CI_Model {
         return $query->get()->result();
     }
 
-    function add_subscription($user_id, $subscription_id, $notify) {
+    function add_subscription($user_id, $subscription_id, $notify, $user_role, $agent_id) {
+
         if($subscription_id == 0) {
             $this->db->set('active_subscription', "Free");
             $this->db->set('subscription_type', "0");
@@ -655,23 +656,66 @@ class Admin_model extends CI_Model {
             $this->db->update('user_db');
             $return_status = ($this->db->affected_rows() > 0);
         } else {
-            $this->db->where('id', $subscription_id);
-            $query = $this->db->get('subscription');
-            $subscription = $query->row();
+			$this->db->where('id', $subscription_id);
+			$query = $this->db->get('subscription');
+			$subscription = $query->row();
+			if($user_role and $agent_id and $user_role == 2){
+				$this->db->where('id', $agent_id);
+				$query = $this->db->get('user_db');
+				$user = $query->row();
+				$sub_time =  $subscription->time;
+				$flag = false;
+				if($sub_time == 365 and $user and $user->amount>=5){
+					$flag = true;
+					$this->db->set('amount', $user->amount - 5);
+					$this->db->where('id', $agent_id);
+					$this->db->update('user_db');
+				}else if($sub_time == 186 and $user and $user->amount>=4){
+					$flag = true;
+					$this->db->set('amount', $user->amount - 4);
+					$this->db->where('id', $agent_id);
+					$this->db->update('user_db');
+				}
+				else if($sub_time == 92 and $user and $user->amount>=3){
+					$flag = true;
+					$this->db->set('amount', $user->amount - 3);
+					$this->db->where('id', $agent_id);
+					$this->db->update('user_db');
+				}
+				else if($sub_time == 31 and $user and $user->amount>=2){
+					$flag = true;
+					$this->db->set('amount', $user->amount - 2);
+					$this->db->where('id', $agent_id);
+					$this->db->update('user_db');
+				}
+				else if($sub_time == 1 and $user and $user->amount>=1){
+					$flag = true;
+					$this->db->set('amount', $user->amount - 1);
+					$this->db->where('id', $agent_id);
+					$this->db->update('user_db');
+				}else{
+					$return_status = false;
+				}
+				if(!$flag){
+					$return_status = false;
+				}
+				
+			} 
 
-            date_default_timezone_set("Asia/Kolkata");
-            $Today = date("Y-m-d");
-            $exp_Date = date('Y-m-d', strtotime($Today . " + " . $subscription->time . " day"));
+			date_default_timezone_set("Asia/Kolkata");
+			$Today = date("Y-m-d");
+			$exp_Date = date('Y-m-d', strtotime($Today . " + " . $subscription->time . " day"));
 
-            $this->db->set('active_subscription', $subscription->name);
-            $this->db->set('subscription_type', $subscription->subscription_type);
-            $this->db->set('time', $subscription->time);
-            $this->db->set('amount', $subscription->amount);
-            $this->db->set('subscription_start', $Today);
-            $this->db->set('subscription_exp', $exp_Date);
-            $this->db->where('id', $user_id);
-            $this->db->update('user_db');
-            $return_status = ($this->db->affected_rows() > 0);
+			$this->db->set('active_subscription', $subscription->name);
+			$this->db->set('subscription_type', $subscription->subscription_type);
+			$this->db->set('time', $subscription->time);
+			$this->db->set('amount', $subscription->amount);
+			$this->db->set('subscription_start', $Today);
+			$this->db->set('subscription_exp', $exp_Date);
+			$this->db->where('id', $user_id);
+			$this->db->update('user_db');
+			$return_status = ($this->db->affected_rows() > 0);
+			 
         }
 
         if($notify && $return_status) {

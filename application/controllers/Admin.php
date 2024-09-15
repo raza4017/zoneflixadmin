@@ -128,6 +128,7 @@ class Admin extends CI_Controller
                  
                 if ($userData->role == 1 or $userData->role == 2) {
                     $data = array(
+                        'user_id' => $userData->id,
                         'name' => $userData->name,
                         'email' => $userData->email,
                         'role' => $userData->role,
@@ -605,7 +606,7 @@ class Admin extends CI_Controller
         } else if ($this->input->post('get_subscription_list')) {
             echo json_encode($this->Admin_model->get_subscriptions());
         } else if ($this->input->post('add_subscription')) {
-            echo $this->Admin_model->add_subscription($this->input->post('user_id'), $this->input->post('subscription_id'), $this->input->post('notify'));
+            echo $this->Admin_model->add_subscription($this->input->post('user_id'), $this->input->post('subscription_id'), $this->input->post('notify'), $this->session->userdata['role'], $this->session->userdata['user_id']);
         } else {
             $data['config'] = $this->Admin_model->getConfig();
             $this->load->view('manage_user', $data);
@@ -614,6 +615,7 @@ class Admin extends CI_Controller
 
     function manage_sub_admins()
     {
+        
         if ($this->input->post('notify_user')) {
             $this->load->model('Notification_model');
             echo $this->Notification_model->sendNotification($this->input->post('heading'), $this->input->post('message'),
