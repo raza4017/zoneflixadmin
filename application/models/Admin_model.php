@@ -650,7 +650,7 @@ class Admin_model extends CI_Model {
     }
 
     function add_subscription($user_id, $subscription_id, $notify, $user_role, $agent_id) {
-
+		 
         if($subscription_id == 0) {
             $this->db->set('active_subscription', "Free");
             $this->db->set('subscription_type', "0");
@@ -666,6 +666,13 @@ class Admin_model extends CI_Model {
 			$query = $this->db->get('subscription');
 			$subscription = $query->row();
 			$flag = false;
+
+			$this->db->where('id', $user_id);
+			$query = $this->db->get('user_db');
+			$userData = $query->row();
+			$daysDifference = strtotime($userData->subscription_exp) - strtotime($userData->subscription_start);
+			$daysDifference = $daysDifference / (60 * 60 * 24);
+			 
 			if($user_role and $agent_id and $user_role == 2){
 				$this->db->where('id', $agent_id);
 				$query = $this->db->get('user_db');
@@ -712,8 +719,13 @@ class Admin_model extends CI_Model {
 
 			if($flag){
 				date_default_timezone_set("Asia/Kolkata");
+
+				$sub_time = $subscription->time;
+				if($daysDifference > 0){
+					$sub_time = (int)($subscription->time + $daysDifference);
+				}
 				$Today = date("Y-m-d");
-				$exp_Date = date('Y-m-d', strtotime($Today . " + " . $subscription->time . " day"));
+				$exp_Date = date('Y-m-d', strtotime($Today . " + " . $sub_time . " day"));
 
 				$this->db->set('active_subscription', $subscription->name);
 				$this->db->set('subscription_type', $subscription->subscription_type);
