@@ -489,36 +489,41 @@ class Admin_api_model extends CI_Model {
 	}
 
 	function get_all_users($role = null, $id = null) {
-        $table = 'user_db';
-         
-        $primaryKey = 'id';
-        
-        $columns = array(
-			array( 'db' => 'id', 'dt' => 2 ),
-			array( 'db' => 'name', 'dt' => 3 ),
-			array( 'db' => 'email',  'dt' => 4 ),
-			array( 'db' => 'role',   'dt' => 5 ),
-			array( 'db' => 'active_subscription',   'dt' => 6 )
+		$table = 'user_db';
+		$primaryKey = 'id';
+		
+		$columns = array(
+			array('db' => 'id', 'dt' => 2),
+			array('db' => 'name', 'dt' => 3),
+			array('db' => 'email', 'dt' => 4),
+			array('db' => 'role', 'dt' => 5),
+			array('db' => 'active_subscription', 'dt' => 6),
+			array('db' => 'subscription_exp', 'dt' => 7) 
 		);
-         
-        $sql_details = array(
-            'user' => $this->db->username,
-            'pass' => $this->db->password,
-            'db'   => $this->db->database,
-            'host' => $this->db->hostname,
+	
+		$sql_details = array(
+			'user' => $this->db->username,
+			'pass' => $this->db->password,
+			'db'   => $this->db->database,
+			'host' => $this->db->hostname,
 			'charset' => 'utf8'
-        );
-        $where = "role=0"; //get only users
-		if($id and $role and $role == 2){
-			$where = $where . " and agent_id=".$id;
+		);
+	
+		$where = "role=0"; // Get only users
+		if ($id && $role && $role == 2) {
+			$where .= " and agent_id=" . $id;
 		}
-        $order = "ORDER BY id DESC";
-        require(APPPATH.'/libraries/ssp.class.php');
-         
-        return json_encode(
-            SSP::simple( $_GET, $sql_details, $table, $primaryKey, $columns, $order, $where)
-        );
+	
+		$order = "ORDER BY id DESC";
+	
+		require(APPPATH . '/libraries/ssp.class.php');
+	
+		return json_encode(
+			SSP::simple($_GET, $sql_details, $table, $primaryKey, $columns, $order, $where)
+		);
 	}
+	
+	
 
 	//Subadmin methods
 
