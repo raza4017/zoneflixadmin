@@ -665,12 +665,12 @@ class Admin_model extends CI_Model {
 			$this->db->where('id', $subscription_id);
 			$query = $this->db->get('subscription');
 			$subscription = $query->row();
+			$flag = false;
 			if($user_role and $agent_id and $user_role == 2){
 				$this->db->where('id', $agent_id);
 				$query = $this->db->get('user_db');
 				$user = $query->row();
 				$sub_time =  $subscription->time;
-				$flag = false;
 				if($sub_time == 365 and $user and $user->amount>=12){
 					$flag = true;
 					$this->db->set('amount', $user->amount - 12);
@@ -706,7 +706,10 @@ class Admin_model extends CI_Model {
 					$return_status = false;
 				}
 				
-			} 
+			} else if($user_role and $user_role == 1){
+				$flag = true;
+			}
+
 			if($flag){
 				date_default_timezone_set("Asia/Kolkata");
 				$Today = date("Y-m-d");
