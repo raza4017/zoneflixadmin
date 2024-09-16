@@ -707,20 +707,21 @@ class Admin_model extends CI_Model {
 				}
 				
 			} 
+			if($flag){
+				date_default_timezone_set("Asia/Kolkata");
+				$Today = date("Y-m-d");
+				$exp_Date = date('Y-m-d', strtotime($Today . " + " . $subscription->time . " day"));
 
-			date_default_timezone_set("Asia/Kolkata");
-			$Today = date("Y-m-d");
-			$exp_Date = date('Y-m-d', strtotime($Today . " + " . $subscription->time . " day"));
-
-			$this->db->set('active_subscription', $subscription->name);
-			$this->db->set('subscription_type', $subscription->subscription_type);
-			$this->db->set('time', $subscription->time);
-			$this->db->set('amount', $subscription->amount);
-			$this->db->set('subscription_start', $Today);
-			$this->db->set('subscription_exp', $exp_Date);
-			$this->db->where('id', $user_id);
-			$this->db->update('user_db');
-			$return_status = ($this->db->affected_rows() > 0);
+				$this->db->set('active_subscription', $subscription->name);
+				$this->db->set('subscription_type', $subscription->subscription_type);
+				$this->db->set('time', $subscription->time);
+				$this->db->set('amount', $subscription->amount);
+				$this->db->set('subscription_start', $Today);
+				$this->db->set('subscription_exp', $exp_Date);
+				$this->db->where('id', $user_id);
+				$this->db->update('user_db');
+				$return_status = ($this->db->affected_rows() > 0);
+			}
 			 
         }
 
