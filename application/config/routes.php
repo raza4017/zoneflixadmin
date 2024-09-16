@@ -86,6 +86,8 @@ $route['manage_sub_admins'] = 'admin/manage_sub_admins';
 // $route['set_access_permissions'] = 'admin/set_access_permissions';
 $route['set_access_permissions/(:num)'] = 'admin/set_access_permissions/$1';
 $route['save_permissions'] = 'admin/save_permissions';
+$route['Admin_api/update_user_balance'] = 'Admin_api/update_user_balance';
+
 
 
 

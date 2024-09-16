@@ -993,6 +993,28 @@ class Admin_api_model extends CI_Model {
 		$this->db->where('id', $movie_play_link_ID);
         return $this->db->delete('movie_play_links');
 	}
+	// update_user_balance
+	public function update_user_balance($user_id, $amount) {
+		// Retrieve current balance from the database
+		$this->db->select('amount');
+		$this->db->where('id', $user_id);
+		$query = $this->db->get('user_db');
+	
+		if ($query->num_rows() == 0) {
+			return false; // User not found
+		}
+	
+		$current_balance = $query->row()->amount;
+	
+		// Update the user's balance by adding the new amount
+		$new_balance = $current_balance + $amount;
+	
+		// Update the amount in the database
+		$this->db->set('amount', $new_balance);
+		$this->db->where('id', $user_id);
+		return $this->db->update('user_db'); // Return true on success
+	}
+	
 
 	function add_subtitle($content_id, $content_type, $modal_add_Language, $modal_add_Subtitle_url, $modal_add_Mimetype, $Status_int) {
 		$this->db->set('content_id', $content_id);

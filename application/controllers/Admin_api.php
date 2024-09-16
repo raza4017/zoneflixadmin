@@ -180,6 +180,31 @@ class Admin_api extends CI_Controller {
 	function update_user_data() {
 		echo $this->Admin_api_model->update_user_data($_POST['Edit_modal_User_id'], $_POST['Edit_modal_User_Name'], $_POST['Edit_modal_Email']);
 	}
+	// update_user_balance
+	public function update_user_balance() {
+		// Load input data
+		$user_id = $this->input->post('add_Balance_Id');
+		$amount = $this->input->post('add_balance_input');
+	
+		// Validate input
+		if (empty($user_id) || empty($amount)) {
+			echo json_encode(['status' => 'error', 'message' => 'Invalid input.']);
+			return;
+		}
+	
+		// Load the model and update the user's balance
+		$this->load->model('Admin_api_model');
+		$result = $this->Admin_api_model->update_user_balance($user_id, $amount);
+	
+		// Handle the result and return a response
+		if ($result) {
+			echo json_encode(['status' => 'success', 'message' => 'Balance updated successfully!']);
+		} else {
+			echo json_encode(['status' => 'error', 'message' => 'Failed to update balance.']);
+		}
+	}
+	
+	
 
 	function save_telegram_data() {
 		echo $this->Admin_api_model->save_telegram_data($_POST['telegram_bot_token'], $_POST['teligram_chat_id']);
