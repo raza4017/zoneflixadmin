@@ -489,36 +489,41 @@ class Admin_api_model extends CI_Model {
 	}
 
 	function get_all_users($role = null, $id = null) {
-        $table = 'user_db';
-         
-        $primaryKey = 'id';
-        
-        $columns = array(
-			array( 'db' => 'id', 'dt' => 2 ),
-			array( 'db' => 'name', 'dt' => 3 ),
-			array( 'db' => 'email',  'dt' => 4 ),
-			array( 'db' => 'role',   'dt' => 5 ),
-			array( 'db' => 'active_subscription',   'dt' => 6 )
+		$table = 'user_db';
+		$primaryKey = 'id';
+		
+		$columns = array(
+			array('db' => 'id', 'dt' => 2),
+			array('db' => 'name', 'dt' => 3),
+			array('db' => 'email', 'dt' => 4),
+			array('db' => 'role', 'dt' => 5),
+			array('db' => 'active_subscription', 'dt' => 6),
+			array('db' => 'subscription_exp', 'dt' => 7) 
 		);
-         
-        $sql_details = array(
-            'user' => $this->db->username,
-            'pass' => $this->db->password,
-            'db'   => $this->db->database,
-            'host' => $this->db->hostname,
+	
+		$sql_details = array(
+			'user' => $this->db->username,
+			'pass' => $this->db->password,
+			'db'   => $this->db->database,
+			'host' => $this->db->hostname,
 			'charset' => 'utf8'
-        );
-        $where = "role=0"; //get only users
-		if($id and $role and $role == 2){
-			$where = $where . " and agent_id=".$id;
+		);
+	
+		$where = "role=0"; // Get only users
+		if ($id && $role && $role == 2) {
+			$where .= " and agent_id=" . $id;
 		}
-        $order = "ORDER BY id DESC";
-        require(APPPATH.'/libraries/ssp.class.php');
-         
-        return json_encode(
-            SSP::simple( $_GET, $sql_details, $table, $primaryKey, $columns, $order, $where)
-        );
+	
+		$order = "ORDER BY id DESC";
+	
+		require(APPPATH . '/libraries/ssp.class.php');
+	
+		return json_encode(
+			SSP::simple($_GET, $sql_details, $table, $primaryKey, $columns, $order, $where)
+		);
 	}
+	
+	
 
 	//Subadmin methods
 
@@ -993,6 +998,28 @@ class Admin_api_model extends CI_Model {
 		$this->db->where('id', $movie_play_link_ID);
         return $this->db->delete('movie_play_links');
 	}
+	// update_user_balance
+	public function update_user_balance($user_id, $amount) {
+		// Retrieve current balance from the database
+		$this->db->select('amount');
+		$this->db->where('id', $user_id);
+		$query = $this->db->get('user_db');
+	
+		if ($query->num_rows() == 0) {
+			return false; // User not found
+		}
+	
+		$current_balance = $query->row()->amount;
+	
+		// Update the user's balance by adding the new amount
+		$new_balance = $current_balance + $amount;
+	
+		// Update the amount in the database
+		$this->db->set('amount', $new_balance);
+		$this->db->where('id', $user_id);
+		return $this->db->update('user_db'); // Return true on success
+	}
+	
 
 	function add_subtitle($content_id, $content_type, $modal_add_Language, $modal_add_Subtitle_url, $modal_add_Mimetype, $Status_int) {
 		$this->db->set('content_id', $content_id);

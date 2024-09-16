@@ -93,7 +93,10 @@ defined('BASEPATH') or exit('No direct script access allowed');
                                             </div>
                                         <?php endforeach; ?>
                                     </div>
-                                    <button type="submit" class="btn btn-primary mt-4">Save Changes</button>
+                                    <button type="submit" class="btn btn-primary mt-4" 
+                                                            onclick="this.form.submit(); this.disabled=true; this.innerText='Please wait...';">
+                                                            Save Changes
+                                                        </button>
                                 </form>
 
                             </div>
