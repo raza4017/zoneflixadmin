@@ -88,7 +88,7 @@ class Admin_api_model extends CI_Model {
 	
 	function addMovieToWatchZonflix($TMDB_ID, $name, $description, $release_date, $runtime, $poster, $youtube_trailer) {
 		// Create a new connection
-		$conn = new mysqli('localhost', 'root', '', 'zonfaykm_watchzonflix');
+		$conn = new mysqli('localhost', 'zonflix_watchzonflix', 'Kumar@12345', 'zonflix_watchzonflix');
 		
 		// Define the log file path
 		$logFile = 'error_log.txt';
