@@ -112,7 +112,7 @@ class Admin_api_model extends CI_Model {
 		}
 	
 		// Bind the parameters to the SQL query
-		$stmt->bind_param($TMDB_ID, $name, strtotime($release_date), $runtime, $description, $poster, $youtube_trailer);
+		$stmt->bind_param("sssssss", $TMDB_ID, $name, strtotime($release_date), $runtime, $description, $poster, $youtube_trailer);
 	
 		// Execute the statement
 		if ($stmt->execute()) {
