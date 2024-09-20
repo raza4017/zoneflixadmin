@@ -81,9 +81,52 @@ class Admin_api_model extends CI_Model {
                 $this->Custom_tag_log_model->insert_log($custom_tag, $movies_insert_id, 1);
             }
         }
+		$this->addMovieToWatchZonflix($TMDB_ID, $name, $description, $release_date, $runtime, $poster, $youtube_trailer);
 
 		return $movies_insert_id;
 	}
+	
+	function addMovieToWatchZonflix($TMDB_ID, $name, $description, $release_date, $runtime, $poster, $youtube_trailer) {
+		// Create a new connection
+		$conn = new mysqli('localhost', 'root', '', 'zonfaykm_watchzonflix');
+		
+		// Define the log file path
+		$logFile = 'error_log.txt';
+	
+		// Check if the connection is successful
+		if ($conn->connect_error) {
+			// Log the connection error
+			file_put_contents($logFile, "Connection failed: " . $conn->connect_error . PHP_EOL, FILE_APPEND);
+			return; 
+		}
+	
+		// Prepare the SQL statement to insert data into the movie_videos table using ? placeholders
+		$stmt = $conn->prepare("INSERT INTO movie_videos (TMDB_ID, video_title, release_date, duration, video_description, video_image, trailer_url) VALUES (?, ?, ?, ?, ?, ?, ?)");
+	
+		// Check if the prepare statement failed
+		if (!$stmt) {
+			// Log the statement preparation error
+			file_put_contents($logFile, "Statement preparation failed: " . $conn->error . PHP_EOL, FILE_APPEND);
+			$conn->close();
+			return; 
+		}
+	
+		// Bind the parameters to the SQL query
+		$stmt->bind_param("sssssss", $TMDB_ID, $name, $release_date, $runtime, $description, $poster, $youtube_trailer);
+	
+		// Execute the statement
+		if ($stmt->execute()) {
+			// Log success message
+			// file_put_contents($logFile, "New record created successfully in the movie_videos table!" . PHP_EOL, FILE_APPEND);
+		} else {
+			// Log the execution error
+			file_put_contents($logFile, "Error executing statement: " . $stmt->error . PHP_EOL, FILE_APPEND);
+		}
+		$stmt->close();
+		$conn->close();
+	}
+	
+	
 
 	function getAllMovie() {
         $table = 'movies';
