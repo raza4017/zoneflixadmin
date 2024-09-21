@@ -74,10 +74,19 @@ class Android_api extends RestController {
         $device_id = $this->post('device');
         $logFile = 'error_log.txt';
         if($Type == "login") {
+            $loginflag = true;
             $userLogin = $this->Android_api_model->login($Email, $Password);
             file_put_contents($logFile, "UserEmail:".$userLogin['email']." userdevice: " . $userLogin['device_id']. " : device: ". $device_id ."Force: ".$force_single_device. PHP_EOL, FILE_APPEND);
-             
-            if ($userLogin != false and $userLogin['device_id'] == $device_id) {  
+            if($force_single_device == 1){
+                if($userLogin != false and $userLogin['device_id'] == $device_id){
+                    $loginflag = true; 
+                }else {
+                    $loginflag = false; 
+                }
+            }else{
+                $loginflag = true;
+            }
+            if ($userLogin != false and $loginflag) {  
                     $Today = date_create(date("Y-m-d"));
                    $User_ID = $userLogin['id'];
                     $subscription_remaining = 0;
@@ -113,7 +122,7 @@ class Android_api extends RestController {
                 $output = array("Status"=>"Successful", "ID"=>$userLogin['id'], "Name"=>$userLogin['name'], "Email"=>$userLogin['email'], "Password"=>$userLogin['password'], "Role"=>$userLogin['role'], "active_subscription"=>$userLogin['active_subscription'], "subscription_type"=>$userLogin['subscription_type'], "subscription_exp"=>$userLogin['subscription_exp'], "subscription_remaining"=>$subscription_remaining);
                 $this->set_response($output, RestController::HTTP_OK);
             } else {
-                $output['Status'] = "Invalid Credential or already logged in on an other device";
+                $output['Status'] = "Invalid Credential";
                 $this->set_response($output, RestController::HTTP_OK);
             }  
         }else if($Type == "signup") {
