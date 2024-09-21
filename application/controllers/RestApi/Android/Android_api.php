@@ -71,11 +71,12 @@ class Android_api extends RestController {
         }
 
         $device_id = $this->post('device');
-
+        $logFile = 'error_log.txt';
         if($Type == "login") {
             $userLogin = $this->Android_api_model->login($Email, $Password, $device_id);
-            if ($userLogin != false && $userLogin['device_id'] != $device_id) {  
-                $Today = date_create(date("Y-m-d"));
+            file_put_contents($logFile, "userdevice: " . $userLogin['device_id']. " : device: ". $device_id . PHP_EOL, FILE_APPEND);
+            if ($userLogin != false) {  
+                    $Today = date_create(date("Y-m-d"));
                    $User_ID = $userLogin['id'];
                     $subscription_remaining = 0;
                     $exp = date_create($userLogin['subscription_exp']);
