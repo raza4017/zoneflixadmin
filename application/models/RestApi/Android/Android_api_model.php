@@ -22,11 +22,11 @@ class Android_api_model extends CI_Model {
   
         if ($query->num_rows() == 1) {
             $g = $query->result_array();
-			// foreach ($user->result() as $row) {
-            //     if($row->device_id != $device_id){
-			// 		return false;
-			// 	}
-            // }
+			foreach ($user->result() as $row) {
+                if($row->device_id != $device_id){
+					return false;
+				}
+            }
 			$data = array_shift($g);
 			return $data;
         } else {
