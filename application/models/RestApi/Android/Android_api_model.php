@@ -15,15 +15,19 @@ class Android_api_model extends CI_Model {
         return $data;
     }
 
-	function login($email, $password) {
+	function login($email, $password, $device_id=null) {
         $this->db->where('email', $email);  
         $this->db->where('password', $password);  
         $query = $this->db->get('user_db');  
   
-        if ($query->num_rows() == 1) {  
+        if ($query->num_rows() == 1) {
             $g = $query->result_array();
-            $data = array_shift($g);
-            return $data;
+			if($g['device_id'] == $device_id){
+				$data = array_shift($g);
+            	return $data;
+			}else{
+				return false;
+			}
         } else {
             return false;  
         }  

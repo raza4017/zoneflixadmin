@@ -73,7 +73,7 @@ class Android_api extends RestController {
         $device_id = $this->post('device');
 
         if($Type == "login") {
-            $userLogin = $this->Android_api_model->login($Email, $Password);
+            $userLogin = $this->Android_api_model->login($Email, $Password, $device_id);
             if ($userLogin != false) {  
                 $Today = date_create(date("Y-m-d"));
                    $User_ID = $userLogin['id'];
@@ -110,7 +110,7 @@ class Android_api extends RestController {
                 $output = array("Status"=>"Successful", "ID"=>$userLogin['id'], "Name"=>$userLogin['name'], "Email"=>$userLogin['email'], "Password"=>$userLogin['password'], "Role"=>$userLogin['role'], "active_subscription"=>$userLogin['active_subscription'], "subscription_type"=>$userLogin['subscription_type'], "subscription_exp"=>$userLogin['subscription_exp'], "subscription_remaining"=>$subscription_remaining);
                 $this->set_response($output, RestController::HTTP_OK);
             } else {
-                $output['Status'] = "Invalid Credential";
+                $output['Status'] = "Invalid Credential or already logged in on an other device";
                 $this->set_response($output, RestController::HTTP_OK);
             }  
         }else if($Type == "signup") {
