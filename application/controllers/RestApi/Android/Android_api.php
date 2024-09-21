@@ -75,12 +75,8 @@ class Android_api extends RestController {
         if($Type == "login") {
             $userLogin = $this->Android_api_model->login($Email, $Password, $device_id);
             file_put_contents($logFile, "UserEmail:".$userLogin['email']." userdevice: " . $userLogin['device_id']. " : device: ". $device_id . PHP_EOL, FILE_APPEND);
-            if($userLogin['device_id'] != $device_id){
-                file_put_contents($logFile, "conditon working" . PHP_EOL, FILE_APPEND);
-            }else{
-                file_put_contents($logFile, "conditon Not working devices are same" . PHP_EOL, FILE_APPEND);
-            }
-            if ($userLogin != false) {  
+             
+            if ($userLogin != false and $userLogin['device_id'] == $device_id) {  
                     $Today = date_create(date("Y-m-d"));
                    $User_ID = $userLogin['id'];
                     $subscription_remaining = 0;
