@@ -62,6 +62,7 @@ class Android_api extends RestController {
     }
 
     public function authentication_post() {
+        $force_single_device = $this->Android_api_model->AppConfig()['force_single_device'];
         $decoded = base64_decode($this->post('encoded'));
         list($Request_Type) = explode(":",$decoded);
         if($Request_Type == "login") {
@@ -73,8 +74,8 @@ class Android_api extends RestController {
         $device_id = $this->post('device');
         $logFile = 'error_log.txt';
         if($Type == "login") {
-            $userLogin = $this->Android_api_model->login($Email, $Password, $device_id);
-            file_put_contents($logFile, "UserEmail:".$userLogin['email']." userdevice: " . $userLogin['device_id']. " : device: ". $device_id . PHP_EOL, FILE_APPEND);
+            $userLogin = $this->Android_api_model->login($Email, $Password);
+            file_put_contents($logFile, "UserEmail:".$userLogin['email']." userdevice: " . $userLogin['device_id']. " : device: ". $device_id ."Force: ".$force_single_device. PHP_EOL, FILE_APPEND);
              
             if ($userLogin != false and $userLogin['device_id'] == $device_id) {  
                     $Today = date_create(date("Y-m-d"));

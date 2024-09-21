@@ -15,7 +15,7 @@ class Android_api_model extends CI_Model {
         return $data;
     }
 
-	function login($email, $password, $device_id=null) {
+	function login($email, $password) {
         $this->db->where('email', $email);  
         $this->db->where('password', $password);  
         $query = $this->db->get('user_db');  
