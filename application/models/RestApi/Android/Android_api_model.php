@@ -22,9 +22,6 @@ class Android_api_model extends CI_Model {
   
         if ($query->num_rows() == 1) {
             $g = $query->result_array();
-			if($g[0]->device_id != $device_id){
-				return false;
-			}
 			$data = array_shift($g);
 			return $data;
         } else {

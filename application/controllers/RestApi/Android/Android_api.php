@@ -74,7 +74,7 @@ class Android_api extends RestController {
 
         if($Type == "login") {
             $userLogin = $this->Android_api_model->login($Email, $Password, $device_id);
-            if ($userLogin != false) {  
+            if ($userLogin != false && $userLogin['device_id'] != $device_id) {  
                 $Today = date_create(date("Y-m-d"));
                    $User_ID = $userLogin['id'];
                     $subscription_remaining = 0;
