@@ -18,16 +18,17 @@ class Android_api_model extends CI_Model {
 	function login($email, $password, $device_id=null) {
         $this->db->where('email', $email);  
         $this->db->where('password', $password);  
-        $query = $this->db->get('user_db');  
+        $query = $user = $this->db->get('user_db');  
   
         if ($query->num_rows() == 1) {
             $g = $query->result_array();
-			if($g['device_id'] == $device_id){
-				$data = array_shift($g);
-            	return $data;
-			}else{
-				return false;
-			}
+			foreach ($user->result() as $row) {
+                if($row->device_id != $device_id){
+					return false;
+				}
+            }
+			$data = array_shift($g);
+			return $data;
         } else {
             return false;  
         }  
